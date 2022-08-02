@@ -1,0 +1,6 @@
+{
+    "coc.preferences.formatOnSaveFiletypes": ["css", "html", "js", "py"], 
+
+    // python config
+    "python.pythonPath": "C:/Users/txen2/AppData/Local/Programs/Python/Python39/python.exe"
+}

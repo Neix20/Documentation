@@ -1,45 +1,4 @@
-" Vim with all enhancements
-source $VIMRUNTIME/vimrc_example.vim
-
-" Use the internal diff if available.
-" Otherwise use the special 'diffexpr' for Windows.
-if &diffopt !~# 'internal'
-  set diffexpr=MyDiff()
-endif
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg1 = substitute(arg1, '!', '\!', 'g')
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg2 = substitute(arg2, '!', '\!', 'g')
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let arg3 = substitute(arg3, '!', '\!', 'g')
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      if empty(&shellxquote)
-        let l:shxq_sav = ''
-        set shellxquote&
-      endif
-      let cmd = '"' . $VIMRUNTIME . '\diff"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  let cmd = substitute(cmd, '!', '\!', 'g')
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-  if exists('l:shxq_sav')
-    let &shellxquote=l:shxq_sav
-  endif
-endfunction
-
-call plug#begin("~/autoload/plug.vim")
+call plug#begin()
 
     " File Explorer
     Plug 'https://github.com/scrooloose/nerdtree'
@@ -128,12 +87,7 @@ function! StatusLine(current, width)
     let l:s .= ' %l:%c '
 
     if a:current
-
         if a:width > 100
-
-            " Get Dos Icon
-            let l:ff_icon = get({ 'dos': '', 'unix': '', 'mac': '' }, &ff, 'dos')
-
             " Head
             let l:s = crystalline#mode()  
 
@@ -145,17 +99,15 @@ function! StatusLine(current, width)
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
             let l:s .= ' %{&fileencoding?&fileencoding:&encoding} |'
-            let l:s .= ' ' . l:ff_icon . ' |'
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{WebDevIconsGetFileFormatSymbol()} |'
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
             let l:s .= crystalline#left_sep('', 'Fill') . ' %P ' 
 
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
-
         elseif a:width > 60 && a:width <= 100
-
             " Head
             let l:s = crystalline#mode()  
 
@@ -166,16 +118,14 @@ function! StatusLine(current, width)
             let l:s .= crystalline#right_sep('', 'Fill')
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
             let l:s .= crystalline#left_sep('', 'Fill') . ' %P ' 
 
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
-
         elseif a:width > 40 && a:width <= 60
-
             " Head
             let l:s = crystalline#mode()  
 
@@ -193,16 +143,11 @@ function! StatusLine(current, width)
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
         endif
-
     else
-
         if a:width > 100
 
-            " Get Dos Icon
-            let l:ff_icon = get({ 'dos': '', 'unix': '', 'mac': '' }, &ff, 'dos')
-
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = ''
 
             " Second Head
             let l:s .= '%#CrystallineTab#'
@@ -213,19 +158,17 @@ function! StatusLine(current, width)
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
             let l:s .= ' %{&fileencoding?&fileencoding:&encoding} |'
-            let l:s .= ' ' . l:ff_icon . ' |'
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{WebDevIconsGetFileFormatSymbol()} |'
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
             let l:s .= '%#CrystallineTab#' . ' %P ' 
 
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
-
         elseif a:width > 60 && a:width <= 100
-
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = ''
 
             " Second Head
             let l:s .= '%#CrystallineTab#'
@@ -234,18 +177,16 @@ function! StatusLine(current, width)
             let l:s .= '%#CrystallineFill#'
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
             let l:s .= '%#CrystallineTab#' . ' %P ' 
 
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
-
         elseif a:width > 40 && a:width <= 60
-
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = ''
 
             " Second Head
             let l:s .= '%#CrystallineTab#'
@@ -260,17 +201,11 @@ function! StatusLine(current, width)
 
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
-
         endif
-
     endif
 
     return l:s
 endfunction
-
-let g:crystalline_enable_sep = 1
-let g:crystalline_statusline_fn = 'StatusLine'
-let g:crystalline_theme = 'gruvbox'
 
 " Tab Line
 function MyTabLabel(n)
@@ -292,19 +227,18 @@ function MyTabLine()
     for i in range(tabpagenr('$'))
         " select the highlighting
         if i + 1 == tabpagenr()
-          let s .= '%#CrystallineTabSel#'
+            let s .= '%#CrystallineTabSel#'
         else
-          let s .= '%#CrystallineTab#'
+            let s .= '%#CrystallineTab#'
         endif
 
         " set the tab page number (for mouse clicks)
-        let s .= ' ' . (i + 1)
+        " let s .= ' ' . (i + 1)
 
         " the label is made by MyTabLabel()
         let l:tabLabel = MyTabLabel(i + 1)
         let l:modified = gettabwinvar(i + 1, 1, '&modified')
-        let s .= ' ' . l:tabLabel . ' ' . ( l:modified == 1 ? '[+] ' : '') . WebDevIconsGetFileTypeSymbol(l:tabLabel) . ' '
-
+        let s .= ' ' .  WebDevIconsGetFileTypeSymbol(l:tabLabel) . ' ' . l:tabLabel . ' ' . ( l:modified == 1 ? '[+] ' : '') . ' '
     endfor
 
     " after the last tab fill with TabLineFill and reset tab page nr
@@ -320,6 +254,10 @@ endfunction
 
 set tabline=%!MyTabLine()
 
+let g:crystalline_enable_sep = 1
+let g:crystalline_statusline_fn = 'StatusLine'
+let g:crystalline_theme = 'gruvbox'
+
 " Vim jump to the last position when reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -329,8 +267,10 @@ endif
 set termguicolors
 
 set tags=./tags,tags
+
 set encoding=utf-8
 set hidden
+set laststatus=2
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
 
@@ -354,8 +294,6 @@ set cc=80                   " set an 80 column border for good coding style
 filetype plugin indent on   " allow auto-indenting depending on file type
 syntax on                   " syntax highlighting
 
-set laststatus=2
-
 " set autoread
 " au CursorHold * checktime  
 
@@ -376,7 +314,7 @@ set shortmess+=c
 set t_Co=256
 
 set background=dark
-colorscheme one
+colorscheme gruvbox
 
 " Startify Startup Screen
 let g:startify_custom_header = [
@@ -403,7 +341,6 @@ let g:startify_custom_header = [
             \'         \/____/                  \/____/                  \/____/                  \/____/          \/____/ ',
             \'                                                                                                             ',
             \]
-
 let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="~"
 
