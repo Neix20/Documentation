@@ -1,45 +1,5 @@
-" Vim with all enhancements
-source $VIMRUNTIME/vimrc_example.vim
 
-" Use the internal diff if available.
-" Otherwise use the special 'diffexpr' for Windows.
-if &diffopt !~# 'internal'
-  set diffexpr=MyDiff()
-endif
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg1 = substitute(arg1, '!', '\!', 'g')
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg2 = substitute(arg2, '!', '\!', 'g')
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let arg3 = substitute(arg3, '!', '\!', 'g')
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      if empty(&shellxquote)
-        let l:shxq_sav = ''
-        set shellxquote&
-      endif
-      let cmd = '"' . $VIMRUNTIME . '\diff"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  let cmd = substitute(cmd, '!', '\!', 'g')
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-  if exists('l:shxq_sav')
-    let &shellxquote=l:shxq_sav
-  endif
-endfunction
-
-call plug#begin("~/autoload/plug.vim")
+call plug#begin()
 
     " File Explorer
     Plug 'https://github.com/scrooloose/nerdtree'
@@ -66,7 +26,6 @@ call plug#begin("~/autoload/plug.vim")
     Plug 'https://github.com/morhetz/gruvbox'
 
     " Syntax Highlighting
-    Plug 'davidhalter/jedi-vim' " Python Syntax 
     Plug 'jelera/vim-javascript-syntax' " Javascript Syntax
 
     " Test Startup Time
@@ -80,11 +39,67 @@ call plug#begin("~/autoload/plug.vim")
 
     " Auto Format
     Plug 'vim-autoformat/vim-autoformat'
+
+    " Tags
+    Plug 'https://github.com/preservim/tagbar' 
+
+    " Snippets
+    Plug 'https://github.com/SirVer/ultisnips'
+    Plug 'https://github.com/honza/vim-snippets'
     
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 
 call plug#end()
+
+let s:cyan = '#56b6c2'
+let s:blue = '#61afef'
+let s:dark_blue = '#3e4452'
+let s:purple = '#c678dd'
+let s:green = '#98c379'
+let s:red = '#e06c75'
+let s:dark_red = '#be5046'
+let s:orange = '#d19a66'
+let s:dark_orange = '#e5c07b'
+let s:black = '#282c34'
+let s:pure_black = "#000000"
+let s:white = '#abb2bf'
+let s:gray = "#c0c0c0"
+let s:pure_white = '#ffffff'
+let s:silver = '#C0C0C0'
+
+" Custom Theme
+function! NeixOne_lightTheme() abort
+    call crystalline#generate_theme({
+        \ 'NormalMode':  [[235, 114], [s:pure_black, s:green]],
+        \ 'InsertMode':  [[235, 39],  [s:pure_black, s:blue]],
+        \ 'VisualMode':  [[235, 170], [s:pure_black, s:purple]],
+        \ 'ReplaceMode': [[235, 204], [s:pure_black, s:blue]],
+        \ '':            [[145, 236], [s:pure_white, s:dark_blue]],
+        \ 'Inactive':    [[235, 145], [s:pure_black, s:white]],
+        \ 'Fill':        [[114, 236], [s:pure_white, s:pure_black]],
+        \ 'Tab':         [[145, 236], [s:pure_white, s:black]],
+        \ 'TabType':     [[235, 170], [s:pure_black, s:purple]],
+        \ 'TabSel':      [[235, 114], [s:pure_black, s:green]],
+        \ 'TabFill':     [[114, 236], [s:pure_white, s:dark_blue]],
+        \ })
+endfunction
+
+function! NeixOne_darkTheme() abort
+    call crystalline#generate_theme({
+        \ 'NormalMode':  [[235, 114], [s:pure_black, s:green]],
+        \ 'InsertMode':  [[235, 39],  [s:pure_black, s:blue]],
+        \ 'VisualMode':  [[235, 170], [s:pure_black, s:purple]],
+        \ 'ReplaceMode': [[235, 204], [s:pure_black, s:blue]],
+        \ '':            [[145, 236], [s:pure_white, s:dark_blue]],
+        \ 'Inactive':    [[235, 145], [s:pure_black, s:white]],
+        \ 'Fill':        [[114, 236], [s:pure_black, s:silver]],
+        \ 'Tab':         [[145, 236], [s:pure_white, s:black]],
+        \ 'TabType':     [[235, 170], [s:pure_black, s:purple]],
+        \ 'TabSel':      [[235, 114], [s:pure_black, s:green]],
+        \ 'TabFill':     [[114, 236], [s:pure_white, s:dark_blue]],
+        \ })
+endfunction
 
 augroup CrystalLineColorScheme
   autocmd!
@@ -92,11 +107,15 @@ augroup CrystalLineColorScheme
 augroup END
 
 function! CrystalLineUpdate()
-    try
-    if g:colors_name =~# 'one\|PaperColor\|gruvbox'
-        let l:color = get({'one': 'onedark', 'PaperColor': 'papercolor', 'gruvbox': 'gruvbox'}, g:colors_name, 'gruvbox')
-        let g:crystalline_theme = l:color
-        call crystalline#apply_current_theme()
+  try
+    if g:colors_name =~# 'one\|PaperColor\|gruvbox\|NeixOne'
+        let l:color = get({
+            \'one': 'onedark',
+            \'PaperColor': 'papercolor',
+            \'gruvbox': 'gruvbox',
+            \'NeixOne': 'neixone',
+            \}, g:colors_name, 'gruvbox')
+        call crystalline#set_theme(l:color)
     endif
   catch
   endtry
@@ -120,7 +139,7 @@ function! StatusLine(current, width)
     let l:s = ''
 
     " Body
-    let l:s .= '%#CrystallineFill#'
+    let l:s .= '%#CrystallineTabFill#'
     let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
 
     let l:s .= '%='
@@ -128,12 +147,7 @@ function! StatusLine(current, width)
     let l:s .= ' %l:%c '
 
     if a:current
-
         if a:width > 100
-
-            " Get Dos Icon
-            let l:ff_icon = get({ 'dos': '', 'unix': '', 'mac': '' }, &ff, 'dos')
-
             " Head
             let l:s = crystalline#mode()  
 
@@ -145,17 +159,15 @@ function! StatusLine(current, width)
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
             let l:s .= ' %{&fileencoding?&fileencoding:&encoding} |'
-            let l:s .= ' ' . l:ff_icon . ' |'
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{WebDevIconsGetFileFormatSymbol()} |'
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
             let l:s .= crystalline#left_sep('', 'Fill') . ' %P ' 
 
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
-
         elseif a:width > 60 && a:width <= 100
-
             " Head
             let l:s = crystalline#mode()  
 
@@ -166,16 +178,14 @@ function! StatusLine(current, width)
             let l:s .= crystalline#right_sep('', 'Fill')
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
             let l:s .= crystalline#left_sep('', 'Fill') . ' %P ' 
 
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
-
         elseif a:width > 40 && a:width <= 60
-
             " Head
             let l:s = crystalline#mode()  
 
@@ -193,19 +203,13 @@ function! StatusLine(current, width)
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
         endif
-
     else
-
         if a:width > 100
-
-            " Get Dos Icon
-            let l:ff_icon = get({ 'dos': '', 'unix': '', 'mac': '' }, &ff, 'dos')
-
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = ''
 
             " Second Head
-            let l:s .= '%#CrystallineTab#'
+            let l:s .= '%#CrystallineTabFill#'
             let l:s .= '  %{fugitive#Head()} ' 
 
             " Body
@@ -213,64 +217,113 @@ function! StatusLine(current, width)
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
             let l:s .= ' %{&fileencoding?&fileencoding:&encoding} |'
-            let l:s .= ' ' . l:ff_icon . ' |'
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{WebDevIconsGetFileFormatSymbol()} |'
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
-            let l:s .= '%#CrystallineTab#' . ' %P ' 
+            let l:s .= '%#CrystallineTabFill#' . ' %P ' 
 
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
-
         elseif a:width > 60 && a:width <= 100
-
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = ''
 
             " Second Head
-            let l:s .= '%#CrystallineTab#'
+            let l:s .= '%#CrystallineTabFill#'
 
             " Body
             let l:s .= '%#CrystallineFill#'
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
             let l:s .= '%='
-            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol(&ft)} '
+            let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
-            let l:s .= '%#CrystallineTab#' . ' %P ' 
+            let l:s .= '%#CrystallineTabFill#' . ' %P ' 
 
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
-
         elseif a:width > 40 && a:width <= 60
-
             " Head
-            let l:s = crystalline#mode()  
-
-            " Second Head
-            let l:s .= '%#CrystallineTab#'
+            let l:s = ''
 
             " Body
             let l:s .= '%#CrystallineFill#'
             let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":"" } '
             let l:s .= '%='
 
-            " Second Tail
-            let l:s .= '%#CrystallineTab#'
-
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
-
         endif
-
     endif
 
     return l:s
 endfunction
 
-let g:crystalline_enable_sep = 1
-let g:crystalline_statusline_fn = 'StatusLine'
-let g:crystalline_theme = 'gruvbox'
+function! StatusLineWithoutDev(current, width)
+    let l:s = ''
+
+    " Body
+    let l:s .= '%#CrystallineTabFill#'
+    let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
+
+    let l:s .= '%='
+    let l:s .= '%#CrystallineNormalMode#'
+    let l:s .= ' %l:%c '
+
+    if a:width > 100
+        " Head
+        let l:s = ''
+
+        " Second Head
+        let l:s .= '%#CrystallineTabFill#'
+        let l:s .= ' %{fugitive#Head()} ' 
+
+        " Body
+        let l:s .= '%#CrystallineFill#'
+        let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
+        let l:s .= '%='
+        let l:s .= ' %{&fileencoding?&fileencoding:&encoding} |'
+        let l:s .= ' %{&ft} '
+
+        " Second Tail
+        let l:s .= '%#CrystallineTabFill#' . ' %P ' 
+
+        " Tail
+        let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
+    elseif a:width > 60 && a:width <= 100
+        " Head
+        let l:s = ''
+
+        " Second Head
+        let l:s .= '%#CrystallineTabFill#'
+
+        " Body
+        let l:s .= '%#CrystallineFill#'
+        let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""} '
+        let l:s .= '%='
+        let l:s .= ' %{&ft} '
+
+        " Second Tail
+        let l:s .= '%#CrystallineTabFill#' . ' %P ' 
+
+        " Tail
+        let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
+    elseif a:width > 40 && a:width <= 60
+        " Head
+        let l:s = ''
+
+        " Body
+        let l:s .= '%#CrystallineFill#'
+        let l:s .= ' %t%h%w%m%r %{&paste ?"PASTE ":""}%{&spell?"SPELL ":"" } '
+        let l:s .= '%='
+
+        " Tail
+        let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
+    endif
+
+    return l:s
+endfunction
 
 " Tab Line
 function MyTabLabel(n)
@@ -292,19 +345,18 @@ function MyTabLine()
     for i in range(tabpagenr('$'))
         " select the highlighting
         if i + 1 == tabpagenr()
-          let s .= '%#CrystallineTabSel#'
+            let s .= '%#CrystallineTabSel#'
         else
-          let s .= '%#CrystallineTab#'
+            let s .= '%#CrystallineTab#'
         endif
 
         " set the tab page number (for mouse clicks)
-        let s .= ' ' . (i + 1)
+        " let s .= ' ' . (i + 1)
 
         " the label is made by MyTabLabel()
         let l:tabLabel = MyTabLabel(i + 1)
         let l:modified = gettabwinvar(i + 1, 1, '&modified')
-        let s .= ' ' . l:tabLabel . ' ' . ( l:modified == 1 ? '[+] ' : '') . WebDevIconsGetFileTypeSymbol(l:tabLabel) . ' '
-
+        let s .= ' ' .  WebDevIconsGetFileTypeSymbol(l:tabLabel) . ' ' . l:tabLabel . ' ' . ( l:modified == 1 ? '[+] ' : '') . ' '
     endfor
 
     " after the last tab fill with TabLineFill and reset tab page nr
@@ -318,7 +370,37 @@ function MyTabLine()
     return s
 endfunction
 
-set tabline=%!MyTabLine()
+function MyTabLineWithoutDev()
+    let s = ''
+    for i in range(tabpagenr('$'))
+        " select the highlighting
+        if i + 1 == tabpagenr()
+            let s .= '%#CrystallineTabSel#'
+        else
+            let s .= '%#CrystallineTab#'
+        endif
+
+        " set the tab page number (for mouse clicks)
+        " let s .= ' ' . (i + 1)
+
+        " the label is made by MyTabLabel()
+        let l:tabLabel = MyTabLabel(i + 1)
+        let l:modified = gettabwinvar(i + 1, 1, '&modified')
+        let s .= ' ' . l:tabLabel . ' ' . ( l:modified == 1 ? '[+] ' : '') . ' '
+    endfor
+
+    " after the last tab fill with TabLineFill and reset tab page nr
+    let s .= '%#CrystallineTabFill#%T'
+
+    " right-align the label to close the current tab page
+    if tabpagenr('$') > 1
+        let s .= '%=%#CrystallineTab#%999XX'
+    endif
+
+    return s
+endfunction
+
+set tabline=%!MyTabLineWithoutDev()
 
 " Vim jump to the last position when reopening a file
 if has("autocmd")
@@ -327,10 +409,13 @@ if has("autocmd")
 endif
 
 set termguicolors
+set foldmethod=indent
 
 set tags=./tags,tags
+
 set encoding=utf-8
 set hidden
+set laststatus=2
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
 
@@ -354,10 +439,22 @@ set cc=80                   " set an 80 column border for good coding style
 filetype plugin indent on   " allow auto-indenting depending on file type
 syntax on                   " syntax highlighting
 
-set laststatus=2
+function EnableLiveChanges()
+    set autoread
+    au CursorHold * checktime  
+endfunction
 
-" set autoread
-" au CursorHold * checktime  
+function SetStatuslineNormal()
+    let g:crystalline_statusline_fn = 'StatusLine'
+    call crystalline#set_statusline(g:crystalline_statusline_fn)
+    set tabline=%!MyTabLine()
+endfunction
+
+function SetStatuslineWithoutDev()
+    let g:crystalline_statusline_fn = 'StatusLineWithoutDev'
+    call crystalline#set_statusline(g:crystalline_statusline_fn)
+    set tabline=%!MyTabLineWithoutDev()
+endfunction
 
 " Some servers have issues with backup files, see #649.
 set nobackup
@@ -376,7 +473,11 @@ set shortmess+=c
 set t_Co=256
 
 set background=dark
-colorscheme one
+colorscheme NeixOne
+
+let g:crystalline_enable_sep = 1
+let g:crystalline_statusline_fn = 'StatusLineWithoutDev'
+let g:crystalline_theme = 'neixone'
 
 " Startify Startup Screen
 let g:startify_custom_header = [
@@ -403,7 +504,6 @@ let g:startify_custom_header = [
             \'         \/____/                  \/____/                  \/____/                  \/____/          \/____/ ',
             \'                                                                                                             ',
             \]
-
 let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="~"
 
@@ -417,3 +517,13 @@ nnoremap <C-z> u
 inoremap <C-z> u
 vnoremap <C-z> u
 
+" Toggle TagBar
+nmap <F8> :TagbarToggle<CR>
+
+" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"

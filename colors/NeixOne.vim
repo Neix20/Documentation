@@ -1,7 +1,7 @@
 " Name:    Neix One vim colorscheme
 " Author:  Tan Xi En
-" License: 
-" Version: 
+" License:
+" Version:
 
 " Global setup =============================================================={{{
 
@@ -37,9 +37,10 @@ endif
 if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " functions
   " returns an approximate grey index for the given grey level
-  
+
   " let s:bg_white = '#fafff7'
-  let s:bg_white =  '#e0f5d5'
+  " let s:bg_white =  '#e0f5d5'
+  let s:bg_white = '#ffffff'
 
   " " Utility functions -------------------------------------------------------{{{
   fun <SID>grey_number(x)
