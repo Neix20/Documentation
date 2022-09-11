@@ -189,6 +189,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-autoformat",
     url = "https://github.com/vim-autoformat/vim-autoformat"
   },
+  ["vim-devicons"] = {
+    loaded = true,
+    path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-devicons",
+    url = "https://github.com/ryanoasis/vim-devicons"
+  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-fugitive",

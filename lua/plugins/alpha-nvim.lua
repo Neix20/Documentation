@@ -7,13 +7,15 @@
 
 -- For configuration examples see: https://github.com/goolord/alpha-nvim/discussions/16
 
-
 local status_ok, alpha = pcall(require, 'alpha')
 if not status_ok then
   return
 end
 
 local dashboard = require('alpha.themes.dashboard')
+
+local math = require('math')
+local fortune = require('alpha.fortune')
 
 -- Footer
 local function footer()
@@ -49,6 +51,8 @@ dashboard.section.buttons.val = {
   dashboard.button('q', '  Quit', ':qa<CR>'),
 }
 
-dashboard.section.footer.val = footer()
+-- dashboard.section.footer.val = footer()
+-- dashboard.section.footer.val = quote.randomQuote(ind)
+dashboard.section.footer.val = fortune()
 
 alpha.setup(dashboard.config)
