@@ -16,6 +16,7 @@ scoop install nodejs
 
 scoop install openjdk
 scoop install lua
+scoop install luarocks
 scoop install dotnet-sdk
 
 scoop install neovim

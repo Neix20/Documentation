@@ -23,7 +23,7 @@ vmap('<C-z>', 'u')
 nmap('<F8>', ':TagbarToggle<CR>')
 
 -- Format File
-nmap('<C-F>', ':lua vim.lsp.buf.formatting()<CR>')
+nmap('<C-F>', ":'<,'>lua vim.lsp.buf.formatting()<CR>")
 
 -- NERDTree
 -- nmap('<C-n>', ':NERDTreeToggle<CR>')            -- open/close
