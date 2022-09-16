@@ -68,6 +68,7 @@ return packer.startup(function(use)
             'saadparwaiz1/cmp_luasnip',
         },
     }
+    use "rafamadriz/friendly-snippets"
 
     -- File explorer
     use 'kyazdani42/nvim-tree.lua'

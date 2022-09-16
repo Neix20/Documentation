@@ -75,3 +75,6 @@ vim.cmd([[
     set tabline=%!MyTabLine()
 ]])
 
+-- Load Snippets
+require("luasnip.loaders.from_vscode").lazy_load()
+
