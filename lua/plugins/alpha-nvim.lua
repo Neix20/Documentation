@@ -42,10 +42,9 @@ dashboard.section.header.val = banner
 
 -- Menu
 dashboard.section.buttons.val = {
-  dashboard.button('e', '  New file', ':ene<CR>:NvimTreeOpen<CR>'),
+  dashboard.button('e', '  New file', ':ene<CR>'),
   -- dashboard.button('f', '  Find file', ':NERDTree<CR>'),
   dashboard.button('t', '  Terminal', ':ene<CR>:term<CR>'),
-  dashboard.button('f', '  Find file', ':NvimTreeOpen<CR>'),
   dashboard.button('s', '  Settings', ':e $MYVIMRC<CR>'),
   dashboard.button('u', '  Update plugins', ':PackerUpdate<CR>'),
   dashboard.button('q', '  Quit', ':qa<CR>'),
