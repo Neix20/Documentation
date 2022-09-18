@@ -114,6 +114,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
   fzf = {
     loaded = true,
     path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fzf",
@@ -213,11 +218,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-surround",
     url = "https://github.com/tpope/vim-surround"
-  },
-  vimwiki = {
-    loaded = true,
-    path = "C:\\Users\\txen2\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vimwiki",
-    url = "https://github.com/vimwiki/vimwiki"
   }
 }
 

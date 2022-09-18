@@ -4,15 +4,15 @@ require('core/options')
 require('core/keymaps')
 require('core/autocmds')
 require('core/tabline')
--- require('core/statusline')
 
 require('plugins/alpha-nvim')
 require('plugins/nvim-cmp')
 require('plugins/nvim-lspconfig')
 require('plugins/nvim-treesitter')
 require('plugins/nvim-tree')
+require('plugins/feline')
 
-require('plugins/lualine')
+-- require('plugins/lualine')
 
 local alpha = require('alpha')
 

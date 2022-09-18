@@ -3,12 +3,8 @@
 echo "Now Installing Packages In Windows: "
 
 scoop install lsd
-scoop install grep
-scoop install gcc
 
 scoop install openssh
-scoop install cmake
-scoop install make
 
 scoop install clang
 scoop install python

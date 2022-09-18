@@ -3,13 +3,13 @@ call plug#begin()
 
     " File Explorer
     Plug 'https://github.com/scrooloose/nerdtree'
-    
+
     " Vim Info
     Plug 'https://github.com/rbong/vim-crystalline'
-    
+
     " Vim Surround Statement with Brackets
     Plug 'https://github.com/tpope/vim-surround'
-    
+
     " Homepage
     Plug 'https://github.com/mhinz/vim-startify'
 
@@ -18,7 +18,7 @@ call plug#begin()
 
     " Auto Pairs
     Plug 'https://github.com/jiangmiao/auto-pairs'
-    
+
     " Themes
     Plug 'https://github.com/rakr/vim-one'
     Plug 'NLKNguyen/papercolor-theme'
@@ -31,22 +31,19 @@ call plug#begin()
     " Test Startup Time
     Plug 'https://github.com/dstein64/vim-startuptime'
 
-    " Git 
+    " Git
     Plug 'https://github.com/tpope/vim-fugitive'
-
-    " Note Editor
-    Plug 'vimwiki/vimwiki'
 
     " Auto Format
     Plug 'vim-autoformat/vim-autoformat'
 
     " Tags
-    Plug 'https://github.com/preservim/tagbar' 
+    Plug 'https://github.com/preservim/tagbar'
 
     " Snippets
     Plug 'https://github.com/SirVer/ultisnips'
     Plug 'https://github.com/honza/vim-snippets'
-    
+
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 
@@ -149,10 +146,10 @@ function! StatusLine(current, width)
     if a:current
         if a:width > 100
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = crystalline#mode()
 
             " Second Head
-            let l:s .= crystalline#right_mode_sep('') . '  %{fugitive#Head()} ' 
+            let l:s .= crystalline#right_mode_sep('') . '  %{fugitive#Head()} '
 
             " Body
             let l:s .= crystalline#right_sep('', 'Fill')
@@ -163,13 +160,13 @@ function! StatusLine(current, width)
             let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
-            let l:s .= crystalline#left_sep('', 'Fill') . ' %P ' 
+            let l:s .= crystalline#left_sep('', 'Fill') . ' %P '
 
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
         elseif a:width > 60 && a:width <= 100
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = crystalline#mode()
 
             " Second Head
             let l:s .= crystalline#right_mode_sep('')
@@ -181,13 +178,13 @@ function! StatusLine(current, width)
             let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
-            let l:s .= crystalline#left_sep('', 'Fill') . ' %P ' 
+            let l:s .= crystalline#left_sep('', 'Fill') . ' %P '
 
             " Tail
             let l:s .= crystalline#left_mode_sep('') . ' %l:%c '
         elseif a:width > 40 && a:width <= 60
             " Head
-            let l:s = crystalline#mode()  
+            let l:s = crystalline#mode()
 
             " Second Head
             let l:s .= crystalline#right_mode_sep('')
@@ -210,7 +207,7 @@ function! StatusLine(current, width)
 
             " Second Head
             let l:s .= '%#CrystallineTabFill#'
-            let l:s .= '  %{fugitive#Head()} ' 
+            let l:s .= '  %{fugitive#Head()} '
 
             " Body
             let l:s .= '%#CrystallineFill#'
@@ -221,7 +218,7 @@ function! StatusLine(current, width)
             let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
-            let l:s .= '%#CrystallineTabFill#' . ' %P ' 
+            let l:s .= '%#CrystallineTabFill#' . ' %P '
 
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
@@ -239,7 +236,7 @@ function! StatusLine(current, width)
             let l:s .= ' %{&ft} %{WebDevIconsGetFileTypeSymbol()} '
 
             " Second Tail
-            let l:s .= '%#CrystallineTabFill#' . ' %P ' 
+            let l:s .= '%#CrystallineTabFill#' . ' %P '
 
             " Tail
             let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
@@ -277,7 +274,7 @@ function! StatusLineWithoutDev(current, width)
 
         " Second Head
         let l:s .= '%#CrystallineTabFill#'
-        let l:s .= ' %{fugitive#Head()} ' 
+        let l:s .= ' %{fugitive#Head()} '
 
         " Body
         let l:s .= '%#CrystallineFill#'
@@ -287,7 +284,7 @@ function! StatusLineWithoutDev(current, width)
         let l:s .= ' %{&ft} '
 
         " Second Tail
-        let l:s .= '%#CrystallineTabFill#' . ' %P ' 
+        let l:s .= '%#CrystallineTabFill#' . ' %P '
 
         " Tail
         let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
@@ -305,7 +302,7 @@ function! StatusLineWithoutDev(current, width)
         let l:s .= ' %{&ft} '
 
         " Second Tail
-        let l:s .= '%#CrystallineTabFill#' . ' %P ' 
+        let l:s .= '%#CrystallineTabFill#' . ' %P '
 
         " Tail
         let l:s .= '%#CrystallineNormalMode#' . ' %l:%c '
@@ -335,9 +332,9 @@ function MyTabLabel(n)
     let fileName = fnamemodify(fileName, ":t")
 
     " Check if Filename is Empty
-    let fileName = strlen(fileName) > 0 ? fileName : '[No Name]' 
+    let fileName = strlen(fileName) > 0 ? fileName : '[No Name]'
 
-    return fileName  
+    return fileName
 endfunction
 
 function MyTabLine()
@@ -416,13 +413,13 @@ set tags=./tags,tags
 set encoding=utf-8
 set hidden
 set laststatus=2
-set showmatch               " show matching 
-set ignorecase              " case insensitive 
+set showmatch               " show matching
+set ignorecase              " case insensitive
 
-set hlsearch                " highlight search 
+set hlsearch                " highlight search
 set incsearch               " incremental search
 
-set tabstop=4               " number of columns occupied by a tab 
+set tabstop=4               " number of columns occupied by a tab
 set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
 set shiftwidth=4            " width for autoindents
 set expandtab               " converts tabs to white space
@@ -441,7 +438,7 @@ syntax on                   " syntax highlighting
 
 function EnableLiveChanges()
     set autoread
-    au CursorHold * checktime  
+    au CursorHold * checktime
 endfunction
 
 function SetStatuslineNormal()
