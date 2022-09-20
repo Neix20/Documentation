@@ -18,6 +18,12 @@ pkg install fzf
 pkg install silversearcher-ag
 pkg install ctags
 
+
+pkg install lsd
+pkg install exa
+pkg install glow
+pkg install fd
+
 # Clone Packer.nvim
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 

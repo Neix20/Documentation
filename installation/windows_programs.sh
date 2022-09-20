@@ -3,6 +3,9 @@
 echo "Now Installing Packages In Windows: "
 
 scoop install lsd
+scoop install glow
+scoop install fd
+scoop install bat
 
 scoop install openssh
 
