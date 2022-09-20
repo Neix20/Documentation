@@ -37,6 +37,7 @@ return packer.startup(function(use)
     -- Snippets
     --use 'SirVer/ultisnips'
     --use 'honza/vim-snippets'
+    use "rafamadriz/friendly-snippets"
 
     -- Tabulate
     use 'godlygeek/tabular'
