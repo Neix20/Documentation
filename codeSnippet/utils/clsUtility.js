@@ -1119,6 +1119,172 @@ function GenerateDocStr(text = "[]") {
 }
 // #endregion
 
+// #region Documentation
+/**
+ * @name ExtractTokenAndParam
+ * @param val
+ * @returns {*}
+ */
+function ExtractTokenAndParam(val = "") {
+
+    // Output: {"func_name": "format","func_param": [ "num", "str", "ls", "dict" ]}
+    let rgx = "";
+
+    rgx = /(.*?\)).*$/g;
+    val = val.replace(rgx, "$1");
+
+    rgx = /(.*)(\(.*)/g;
+    let token = val.replace(rgx, "$1");
+    let param = val.replace(rgx, "$2");
+
+    // Get Token
+    token = token.split("=").at(0).trim();
+    token = token.split(" ").at(-1);
+
+    // Remove Start and End Bracket
+    param = param.slice(1, param.length - 1);
+    param = param.split(/, (?![^<>]*>)/g);
+
+    // Remove Default Values
+    param = param.map(x => x.split("=").at(0).trim());
+
+    return {
+        func_name: token,
+        func_param: param
+    }
+}
+
+/**
+ * @name GenParamDataType
+ * @param param
+ * @returns {*}
+ */
+function GenParamDataType(param = []) {
+    // Input: [ "num", "str", "ls", "dict" ]
+    // Input: [ "num: number", "str: string", "ls: number[]", "dict: { [key: string]: number }" ]
+    // Input: [ "int num", "std::string str", "std::vector<int> ls", "std::map<std::string, int> dict" ]
+
+    let param_res = [];
+
+    const key = param[0];
+    if (key.includes(": ")) {
+        param_res = param
+            .map(x => x.split(": "))
+            .map(x => [x[0], x.slice(1).join(" ")])
+            .map(x => x.reverse());
+    }
+
+    if (param_res.length == 0) {
+        param_res = param
+            .map(x => x.replace(/std::/g, ""))
+            .map(x => x.split(" "))
+            .map(x => [x.slice(0, x.length - 1).join(" "), x.at(-1)]);
+    }
+
+    return param_res;
+}
+
+/**
+ * @name GenDocGeneral
+ * @param name
+ * @param param
+ * @returns {*}
+ */
+function GenDocGeneral(name = "", param = []) {
+    let param_res = GenParamDataType(param);
+
+    param_res = param_res.map((x, ind) => {
+        const [data_type, param_name] = x;
+        if (data_type === "") {
+            return ` * @param ${param_name}`
+        }
+
+        return ` * @param {${data_type}} ${param_name}`
+    });
+
+    const res = [
+        "/**",
+        ` * @name ${name}`,
+        ...param_res,
+        " * @returns {*}",
+        " */"
+    ]
+
+    return res;
+}
+
+/**
+ * @name GenDocPython
+ * @param name
+ * @param param
+ * @returns {*}
+ */
+function GenDocPython(name = "", param = []) {
+    let param_res = GenParamDataType(param);
+
+    param_res = param_res.map((x, ind) => {
+        const [data_type, param_name] = x;
+        if (data_type === "") {
+            return `\t\t${param_name}:`
+        }
+
+        return `\t\t${param_name} (${data_type}):`;
+    });
+
+    const res = [
+        "\t\"\"\"",
+        "",
+        "\tArgs:",
+        ...param_res,
+        "",
+        "\tReturns:",
+        `\t\t${name} (*):`,
+        "\t\"\"\""
+    ]
+
+    return res;
+}
+
+/**
+ * @name GenerateDocStr
+ * @param text
+ * @returns {*}
+ */
+function GenerateDocStr(text = "[]") {
+    if (text.length <= 0) {
+        return "";
+    }
+
+    try {
+        const kw = text.split(" ").at(0);
+
+        const { func_name: token, func_param: param } = ExtractTokenAndParam(text);
+
+        let res = [];
+
+        if (kw === "def") {
+            const t_arr = GenDocPython(token, param);
+
+            res = [
+                text,
+                ...t_arr
+            ]
+        } else {
+            const t_arr = GenDocGeneral(token, param);
+            res = [
+                ...t_arr,
+                text
+            ]
+        }
+
+        return res.join("\n");
+
+    } catch (error) {
+        throw error;
+    }
+}
+// #endregion
+
 module.exports.genDt = genDt;
 module.exports.MakeIntoArr = MakeIntoArr;
 module.exports.MakeIntoJson = MakeIntoJson;

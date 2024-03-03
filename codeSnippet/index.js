@@ -115,6 +115,8 @@ const onConvertJsonToCsv = () => Wrapper(CsvJsonFormatter);
 const onConvertJsonToYaml = () => Wrapper(YamlJsonFormatter);
 const OnGenerateDocStr = () => Wrapper(GenerateDocStr);
 
+const OnGenerateDocStr = () => Wrapper(GenerateDocStr);
+
 module.exports.macroCommands = {
     // Unique to Neix Use Case
     "Format SQL": {
