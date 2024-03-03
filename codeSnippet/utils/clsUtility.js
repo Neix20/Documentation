@@ -1,3 +1,8 @@
+/**
+ * @name genDt
+ * @param 
+ * @returns {*}
+ */
 function genDt() {
     const dt = new Date();
 
@@ -16,7 +21,12 @@ function genDt() {
     return `${t}T${t2}`;
 }
 
-// #region Core Functions
+// #region Core Utils
+/**
+ * @name MakeIntoArr
+ * @param text
+ * @returns {*}
+ */
 function MakeIntoArr(text = "") {
     if (text.length <= 0) {
         return "";
@@ -38,17 +48,19 @@ function MakeIntoArr(text = "") {
     }
 }
 
-// This Functino took me 2 hours
+/**
+ * @name parseNestedJson
+ * @param txt
+ * @returns {*}
+ */
 function parseNestedJson(txt) {
 
     if (typeof txt === "object") {
         return txt;
     }
     
-
     try {
         txt = txt
-            .replace(/^"|"$/g, "")
             .replace(/\\n/g, "")
             .replace(/\s{2,}/g, "")
             .replace(/\\{2,}/g, `\\`)
@@ -65,6 +77,11 @@ function parseNestedJson(txt) {
     }
 }
 
+/**
+ * @name JsonHelper
+ * @param text
+ * @returns {*}
+ */
 function JsonHelper(text = "{}") {
     if (text.length <= 0) {
         return "";
@@ -115,6 +132,11 @@ function JsonHelper(text = "{}") {
     }
 }
 
+/**
+ * @name GetJsonKeyValue
+ * @param text
+ * @returns {*}
+ */
 function GetJsonKeyValue(text = "[]") {
     if (text.length <= 0) {
         return "";
@@ -181,6 +203,11 @@ function GetJsonKeyValue(text = "[]") {
 }
 
 // SQL
+/**
+ * @name FormatSqlCsv
+ * @param text
+ * @returns {*}
+ */
 function FormatSqlCsv(text = "") {
     if (text.length <= 0) {
         return "";
@@ -205,6 +232,11 @@ function FormatSqlCsv(text = "") {
     }
 }
 
+/**
+ * @name MakeIntoJson
+ * @param text
+ * @returns {*}
+ */
 function MakeIntoJson(text = "[]") {
 
     if (text.length <= 0) {
@@ -286,6 +318,11 @@ function MakeIntoJson(text = "[]") {
     }
 }
 
+/**
+ * @name JoinIntoOneString
+ * @param text
+ * @returns {*}
+ */
 function JoinIntoOneString(text = "") {
     if (text.length <= 0) {
         return "";
@@ -304,6 +341,11 @@ function JoinIntoOneString(text = "") {
 }
 
 // SQL
+/**
+ * @name ParseSqlStoreProcedureIntoDict
+ * @param text
+ * @returns {*}
+ */
 function ParseSqlStoreProcedureIntoDict(text = "[]") {
     if (text.length <= 0) {
         return "";
@@ -342,6 +384,11 @@ function ParseSqlStoreProcedureIntoDict(text = "[]") {
 }
 
 // Markdown
+/**
+ * @name FormatTasks
+ * @param text
+ * @returns {*}
+ */
 function FormatTasks(text = "") {
     if (text.length <= 0) {
         return "";
@@ -392,6 +439,11 @@ function FormatTasks(text = "") {
 // #endregion
 
 // #region Convert To SQL Helper
+/**
+ * @name ConvertJsonToSql
+ * @param text
+ * @returns {*}
+ */
 function ConvertJsonToSql(text = "{}") {
     if (text.length <= 0) {
         return "";
@@ -418,6 +470,11 @@ function ConvertJsonToSql(text = "{}") {
     }
 }
 
+/**
+ * @name InsertSql
+ * @param data
+ * @returns {*}
+ */
 function InsertSql(data = []) {
     let res = [];
 
@@ -471,6 +528,11 @@ function InsertSql(data = []) {
     return res;
 }
 
+/**
+ * @name UpdateSql
+ * @param data
+ * @returns {*}
+ */
 function UpdateSql(data = []) {
     let res = [];
 
@@ -530,6 +592,11 @@ function UpdateSql(data = []) {
     return res;
 }
 
+/**
+ * @name SelectSql
+ * @param data
+ * @returns {*}
+ */
 function SelectSql(data = []) {
 
     let res = [];
@@ -594,6 +661,11 @@ function SelectSql(data = []) {
 // #endregion
 
 // #region Timestamp
+/**
+ * @name ConvertIsoToEpoch
+ * @param txt
+ * @returns {*}
+ */
 function ConvertIsoToEpoch(txt) {
 
     if (txt.length <= 0) {
@@ -623,6 +695,11 @@ function ConvertIsoToEpoch(txt) {
     return res;
 }
 
+/**
+ * @name ConvertEpochToIso
+ * @param txt
+ * @returns {*}
+ */
 function ConvertEpochToIso(txt) {
 
     // Input: 1711625666 (s)
@@ -653,6 +730,11 @@ function ConvertEpochToIso(txt) {
     return res;
 }
 
+/**
+ * @name EpochIsoConverter
+ * @param data
+ * @returns {*}
+ */
 function EpochIsoConverter(data) {
 
     let dataType = "string";
@@ -678,6 +760,11 @@ function EpochIsoConverter(data) {
 // #region YAML
 const yaml = require('js-yaml');
 
+/**
+ * @name jsonToYaml
+ * @param txt
+ * @returns {*}
+ */
 function jsonToYaml(txt) {
     try {
         let jsonData = txt;
@@ -691,6 +778,11 @@ function jsonToYaml(txt) {
     }
 }
 
+/**
+ * @name yamlToJson
+ * @param txt
+ * @returns {*}
+ */
 function yamlToJson(txt) {
     try {
         const res = yaml.load(txt, { schema: yaml.JSON_SCHEMA });
@@ -700,6 +792,11 @@ function yamlToJson(txt) {
     }
 }
 
+/**
+ * @name detectYamlJson
+ * @param data
+ * @returns {*}
+ */
 function detectYamlJson(data) {
 
     if (typeof data === "object") {
@@ -722,6 +819,11 @@ function detectYamlJson(data) {
     }
 }
 
+/**
+ * @name YamlJsonFormatter
+ * @param text
+ * @returns {*}
+ */
 function YamlJsonFormatter(text = "") {
     if (text.length <= 0) {
         return "";
@@ -745,12 +847,16 @@ function YamlJsonFormatter(text = "") {
         throw error;
     }
 }
-
 // #endregion
 
 // #region CSV
 const csvConverter = require("json-2-csv");
 
+/**
+ * @name jsonToCsv
+ * @param txt
+ * @returns {*}
+ */
 function jsonToCsv(txt) {
     try {
         let json = txt;
@@ -766,6 +872,11 @@ function jsonToCsv(txt) {
     }
 }
 
+/**
+ * @name csvToJson
+ * @param txt
+ * @returns {*}
+ */
 function csvToJson(txt) {
     try {
         const res = csvConverter.csv2json(txt);
@@ -775,6 +886,11 @@ function csvToJson(txt) {
     }
 }
 
+/**
+ * @name detectCsvJson
+ * @param data
+ * @returns {*}
+ */
 function detectCsvJson(data) {
 
     try {
@@ -791,6 +907,11 @@ function detectCsvJson(data) {
     }
 }
 
+/**
+ * @name CsvJsonFormatter
+ * @param text
+ * @returns {*}
+ */
 function CsvJsonFormatter(text = "[]") {
     if (text.length <= 0) {
         return "";
@@ -816,6 +937,172 @@ function CsvJsonFormatter(text = "[]") {
 }
 // #endregion
 
+// #region Documentation
+/**
+ * @name ExtractTokenAndParam
+ * @param val
+ * @returns {*}
+ */
+function ExtractTokenAndParam(val = "") {
+
+    // Output: {"func_name": "format","func_param": [ "num", "str", "ls", "dict" ]}
+    let rgx = "";
+
+    rgx = /(.*?\)).*$/g;
+    val = val.replace(rgx, "$1");
+
+    rgx = /(.*)(\(.*)/g;
+    let token = val.replace(rgx, "$1");
+    let param = val.replace(rgx, "$2");
+
+    // Get Token
+    token = token.split("=").at(0).trim();
+    token = token.split(" ").at(-1);
+
+    // Remove Start and End Bracket
+    param = param.slice(1, param.length - 1);
+    param = param.split(/, (?![^<>]*>)/g);
+
+    // Remove Default Values
+    param = param.map(x => x.split("=").at(0).trim());
+
+    return {
+        func_name: token,
+        func_param: param
+    }
+}
+
+/**
+ * @name GenParamDataType
+ * @param param
+ * @returns {*}
+ */
+function GenParamDataType(param = []) {
+    // Input: [ "num", "str", "ls", "dict" ]
+    // Input: [ "num: number", "str: string", "ls: number[]", "dict: { [key: string]: number }" ]
+    // Input: [ "int num", "std::string str", "std::vector<int> ls", "std::map<std::string, int> dict" ]
+
+    let param_res = [];
+
+    const key = param[0];
+    if (key.includes(": ")) {
+        param_res = param
+            .map(x => x.split(": "))
+            .map(x => [x[0], x.slice(1).join(" ")])
+            .map(x => x.reverse());
+    }
+
+    if (param_res.length == 0) {
+        param_res = param
+            .map(x => x.replace(/std::/g, ""))
+            .map(x => x.split(" "))
+            .map(x => [x.slice(0, x.length - 1).join(" "), x.at(-1)]);
+    }
+
+    return param_res;
+}
+
+/**
+ * @name GenDocGeneral
+ * @param name
+ * @param param
+ * @returns {*}
+ */
+function GenDocGeneral(name = "", param = []) {
+    let param_res = GenParamDataType(param);
+
+    param_res = param_res.map((x, ind) => {
+        const [data_type, param_name] = x;
+        if (data_type === "") {
+            return ` * @param ${param_name}`
+        }
+
+        return ` * @param {${data_type}} ${param_name}`
+    });
+
+    const res = [
+        "/**",
+        ` * @name ${name}`,
+        ...param_res,
+        " * @returns {*}",
+        " */"
+    ]
+
+    return res;
+}
+
+/**
+ * @name GenDocPython
+ * @param name
+ * @param param
+ * @returns {*}
+ */
+function GenDocPython(name = "", param = []) {
+    let param_res = GenParamDataType(param);
+
+    param_res = param_res.map((x, ind) => {
+        const [data_type, param_name] = x;
+        if (data_type === "") {
+            return `\t\t${param_name}:`
+        }
+
+        return `\t\t${param_name} (${data_type}):`;
+    });
+
+    const res = [
+        "\t\"\"\"",
+        "",
+        "\tArgs:",
+        ...param_res,
+        "",
+        "\tReturns:",
+        `\t\t${name} (*):`,
+        "\t\"\"\""
+    ]
+
+    return res;
+}
+
+/**
+ * @name GenerateDocStr
+ * @param text
+ * @returns {*}
+ */
+function GenerateDocStr(text = "[]") {
+    if (text.length <= 0) {
+        return "";
+    }
+
+    try {
+        const kw = text.split(" ").at(0);
+
+        const { func_name: token, func_param: param } = ExtractTokenAndParam(text);
+
+        let res = [];
+
+        if (kw === "def") {
+            const t_arr = GenDocPython(token, param);
+
+            res = [
+                text,
+                ...t_arr
+            ]
+        } else {
+            const t_arr = GenDocGeneral(token, param);
+            res = [
+                ...t_arr,
+                text
+            ]
+        }
+
+        return res.join("\n");
+
+    } catch (error) {
+        throw error;
+    }
+}
+// #endregion
+
 let utils = {};
 
 utils = {
@@ -825,26 +1112,27 @@ utils = {
 
 utils = {
     ...utils,
-    FormatSqlCsv,
     MakeIntoArr,
     MakeIntoJson,
     JoinIntoOneString,
     JsonHelper,
     GetJsonKeyValue,
+}
+
+utils = {
+    ...utils,
+    FormatSqlCsv,
     ParseSqlStoreProcedureIntoDict,
-    ConvertJsonToSql,
     FormatTasks,
 };
 
 utils = {
     ...utils,
-    EpochIsoConverter
-}
-
-utils = {
-    ...utils,
+    ConvertJsonToSql,
+    EpochIsoConverter,
     YamlJsonFormatter,
-    CsvJsonFormatter
+    CsvJsonFormatter,
+    GenerateDocStr
 }
 
 module.exports = utils;
