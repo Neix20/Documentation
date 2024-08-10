@@ -4,6 +4,8 @@
 ## References
 
 [Kubernetes Ingress](https://spacelift.io/blog/kubernetes-ingress)
+[GitHub Link](https://github.com/nginxinc/kubernetes-ingress/issues/257)
+[Github Link II](https://github.com/nginxinc/kubernetes-ingress/issues/323)
 
 Setup Azure AKS\
 You can do it using basic Click-Ops, or via Terraform
