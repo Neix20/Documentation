@@ -1,6 +1,10 @@
 
 # How to configure Ingress
 
+## References
+
+[Kubernetes Ingress](https://spacelift.io/blog/kubernetes-ingress)
+
 Setup Azure AKS\
 You can do it using basic Click-Ops, or via Terraform
 
