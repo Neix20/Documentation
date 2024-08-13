@@ -6,6 +6,7 @@
 - <https://github.com/kubernetes/ingress-nginx/issues/9241>
 - <https://spacelift.io/blog/kubernetes-ingress>
 - <https://stackoverflow.com/questions/53207059/react-nginx-routing-to-subdirectory>
+- <https://stackoverflow.com/questions/75350543/how-to-build-a-vite-project-with-homepage-set-to-more-details-given-below>
 
 ## Kubernetes Terminology
 
