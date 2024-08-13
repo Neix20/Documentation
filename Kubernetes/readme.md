@@ -5,6 +5,7 @@
 
 - <https://github.com/kubernetes/ingress-nginx/issues/9241>
 - <https://spacelift.io/blog/kubernetes-ingress>
+- <https://stackoverflow.com/questions/53207059/react-nginx-routing-to-subdirectory>
 
 ## Kubernetes Terminology
 
