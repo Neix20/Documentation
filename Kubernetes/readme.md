@@ -1,5 +1,12 @@
 
-# Kubernetes Terminology
+# Kubernetes
+
+## References
+
+- <https://github.com/kubernetes/ingress-nginx/issues/9241>
+- <https://spacelift.io/blog/kubernetes-ingress>
+
+## Kubernetes Terminology
 
 <table>
     <tr>
