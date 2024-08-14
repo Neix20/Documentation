@@ -232,6 +232,23 @@ types {
 ### URL Rewrite
 
 ```nginx
+server {
+    listen 80;
+    listen [::]:80;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+
+    location ^~ /react-app {
+        alias /usr/share/nginx/html;
+        try_files $uri $uri/ /react-app/index.html;
+    }
+}
+```
+
+```nginx
 # 前缀匹配（Prefix Match）： `location /path/` 使用前缀匹配，匹配以 `/path/` 开头的请求路径。
 location /images/ {
 	# 匹配以 /images/ 开头的路径
