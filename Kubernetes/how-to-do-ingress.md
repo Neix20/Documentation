@@ -97,7 +97,7 @@ txe1/simple-react-app
 Once you have setup your kubernetes, and your docker, you need to first install kubernetes ingerss controller to AKS
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 ```
 
 To check your installation, run this command
