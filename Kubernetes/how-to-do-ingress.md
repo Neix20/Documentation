@@ -128,7 +128,7 @@ spec:
     spec:
       containers:
       - name:  react-app
-        image:  txe1/simple-react-app:v4
+        image:  txe1/simple-react-app:latest
         ports:
         - containerPort:  80
           name:  react-app
@@ -157,21 +157,13 @@ metadata:
   namespace: ingress-nginx
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/add-base-url: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: aks-helloworld-one
-            port:
-              number: 80
-      - path: /react-app
+      - path: /react-app(/|$)(.*)
         pathType: Prefix
         backend:
           service:
@@ -181,4 +173,4 @@ spec:
 ```
 
 Success! You can now visit the site via the External IP. In the following example it would be:\
-<http://20.255.220.68>
+<http://20.255.220.68/react-app>
