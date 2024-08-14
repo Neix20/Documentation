@@ -3,9 +3,13 @@
 
 ## References
 
-[Kubernetes Ingress](https://spacelift.io/blog/kubernetes-ingress)
-[GitHub Link](https://github.com/nginxinc/kubernetes-ingress/issues/257)
-[Github Link II](https://github.com/nginxinc/kubernetes-ingress/issues/323)
+- [Kubernetes Ingress](https://spacelift.io/blog/kubernetes-ingress)
+- [GitHub Link](https://github.com/nginxinc/kubernetes-ingress/issues/257)
+- [Github Link II](https://github.com/nginxinc/kubernetes-ingress/issues/323)
+- <https://rchavesferna.medium.com/building-microfrontends-part-iii-public-path-problem-1ce823be24c9>
+- <https://stackoverflow.com/questions/53207059/react-nginx-routing-to-subdirectory>
+- <https://github.com/kubernetes/ingress-nginx/issues/4172>
+- <https://stackoverflow.com/questions/37396427/how-to-bundle-a-react-app-to-a-subdirectory-on-a-server>
 
 Setup Azure AKS\
 You can do it using basic Click-Ops, or via Terraform
@@ -97,7 +101,7 @@ txe1/simple-react-app
 Once you have setup your kubernetes, and your docker, you need to first install kubernetes ingerss controller to AKS
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 ```
 
 To check your installation, run this command
@@ -128,7 +132,7 @@ spec:
     spec:
       containers:
       - name:  react-app
-        image:  txe1/simple-react-app:v4
+        image:  txe1/simple-react-app:latest
         ports:
         - containerPort:  80
           name:  react-app
@@ -157,21 +161,13 @@ metadata:
   namespace: ingress-nginx
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/add-base-url: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: aks-helloworld-one
-            port:
-              number: 80
-      - path: /react-app
+      - path: /react-app(/|$)(.*)
         pathType: Prefix
         backend:
           service:
@@ -181,4 +177,4 @@ spec:
 ```
 
 Success! You can now visit the site via the External IP. In the following example it would be:\
-<http://20.255.220.68>
+<http://20.255.220.68/react-app>

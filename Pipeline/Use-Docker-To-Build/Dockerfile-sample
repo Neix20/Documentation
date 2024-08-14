@@ -1,0 +1,9 @@
+FROM node:22
+  
+# Create app directory
+WORKDIR /usr/src/app
+
+RUN npx create-react-app my-app
+
+# Run Command to Never Die
+CMD ["sleep", "infinity"]
