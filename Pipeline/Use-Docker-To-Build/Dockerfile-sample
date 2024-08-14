@@ -3,9 +3,6 @@ FROM node:22
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install Vim
-RUN apt-get update && apt-get install -y vim
-
 RUN npx create-react-app my-app
 
 # Run Command to Never Die
