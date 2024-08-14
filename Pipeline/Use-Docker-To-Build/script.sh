@@ -22,7 +22,7 @@ docker rm extract-dist
 # Copy Dist Folder 2
 docker cp <container-name>:/usr/src/app/dist .
 
-docker cp txe1/gay-img:/usr/src/app/dist .
+docker cp simple-react-app:/usr/src/app/dist .
 
 ############
 # Method 2
