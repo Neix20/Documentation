@@ -9,6 +9,7 @@
 - <https://rchavesferna.medium.com/building-microfrontends-part-iii-public-path-problem-1ce823be24c9>
 - <https://stackoverflow.com/questions/53207059/react-nginx-routing-to-subdirectory>
 - <https://github.com/kubernetes/ingress-nginx/issues/4172>
+- <https://stackoverflow.com/questions/37396427/how-to-bundle-a-react-app-to-a-subdirectory-on-a-server>
 
 Setup Azure AKS\
 You can do it using basic Click-Ops, or via Terraform
