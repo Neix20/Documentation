@@ -8,6 +8,7 @@
 - [Github Link II](https://github.com/nginxinc/kubernetes-ingress/issues/323)
 - <https://rchavesferna.medium.com/building-microfrontends-part-iii-public-path-problem-1ce823be24c9>
 - <https://stackoverflow.com/questions/53207059/react-nginx-routing-to-subdirectory>
+- <https://github.com/kubernetes/ingress-nginx/issues/4172>
 
 Setup Azure AKS\
 You can do it using basic Click-Ops, or via Terraform
