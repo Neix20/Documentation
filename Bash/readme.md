@@ -34,6 +34,36 @@ s/(.|\n)*?//g
 
 ## Helpful Scripts
 
+### Get Directory / Folder Size
+
+```shell
+du -h --max-depth=1 
+```
+
+### Get Total Disk Size
+
+```shell
+df -h
+```
+
+### Mount USB
+
+```shell
+
+## Identify the USB Drive
+lsblk
+sudo fdisk -l
+
+## Create Mount Point
+sudo mkdir /mnt/usb
+
+## Mount USB Drive
+sudo mount /dev/sdb1 /mnt/usb
+
+## Unmount USB Drive
+sudo umount /mnt/usb
+```
+
 ### Insert String by Line Number
 
 ```shell
@@ -185,5 +215,10 @@ ssh-copy-id -i <key-name>.pem.pub ubuntu@54.173.100.10
 ```shell
 ssh -i <key-name>.pem ubuntu@54.173.100.10
 ```
+### Get Difference of files using vim
 
+```shell
+vim -d <file-1> <file-2>
+vim -d index.md test.md
+```
 
