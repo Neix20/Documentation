@@ -32,3 +32,32 @@ git commit
 
 # Move Head Pointer
 git branch -f tmp
+
+######################
+# Clean Git Commits
+######################
+
+# Checkout to New Branch
+git checkout -b <branch-name>
+git checkout -b tmp
+
+# Rebase current branch to master
+# Rebase as many times as needed
+git rebase -i <start-commit> <end-commit>
+git rebase -i <start-commit> <branch-name>
+git rebase -i 80dc08e2425f21d101e5d64beec950d75d9d3511 tmp
+
+# Once you have completed, your "squash" and "reword" rebase
+# Checkout to Master
+git checkout master
+
+# Reset to Original Commit
+git reset --soft <commid-id>
+git reset --soft 80dc08e2425f21d101e5d64beec950d75d9d3511
+
+# Merge With Tmp Branch
+git merge tmp
+
+# Finally, Delete the Newly Created Branch
+git branch -d tmp
+
