@@ -215,5 +215,10 @@ ssh-copy-id -i <key-name>.pem.pub ubuntu@54.173.100.10
 ```shell
 ssh -i <key-name>.pem ubuntu@54.173.100.10
 ```
+### Get Difference of files using vim
 
+```shell
+vim -d <file-1> <file-2>
+vim -d index.md test.md
+```
 
