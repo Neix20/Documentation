@@ -29,3 +29,6 @@ git rebase -i ecb82d40dfdff29e2515d602078242b19bdb3797 master
 # Git Squash Commits
 git reset --soft HEAD~3
 git commit
+
+# Move Head Pointer
+git branch -f tmp
