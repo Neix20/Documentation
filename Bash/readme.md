@@ -229,3 +229,10 @@ vim -d <file-1> <file-2>
 vim -d index.md test.md
 ```
 
+### Use Vim to View Git Logs
+
+```shell
+git logs | vim -R -
+```
+
+
