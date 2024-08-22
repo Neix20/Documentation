@@ -1,0 +1,4 @@
+[pretty]
+	lo = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset
+[alias]
+	lg = log --graph --all --pretty=lo
