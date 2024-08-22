@@ -215,7 +215,12 @@ ssh-copy-id -i <key-name>.pem.pub ubuntu@54.173.100.10
 ```shell
 ssh -i <key-name>.pem ubuntu@54.173.100.10
 ```
-### Get Difference of files using vim
+### Get Difference of Folders using diff
+
+```shell
+diff -bqr <folder-1> <folder-2>
+diff -bqr Dotfiles/ Dotfiles-trash/
+```
 
 ### Get Difference of files using vim
 
