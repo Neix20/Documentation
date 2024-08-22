@@ -215,6 +215,7 @@ ssh-copy-id -i <key-name>.pem.pub ubuntu@54.173.100.10
 ```shell
 ssh -i <key-name>.pem ubuntu@54.173.100.10
 ```
+
 ### Get Difference of Folders using diff
 
 ```shell
@@ -234,5 +235,4 @@ vim -d index.md test.md
 ```shell
 git logs | vim -R -
 ```
-
 
