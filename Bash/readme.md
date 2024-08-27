@@ -22,6 +22,7 @@ chmod       # Update Permission of File
 mkdir       # Create Directory
 rmdir       # Remove Directory
 systemctl   # Check Service Status
+&           # Run Command in Background
 ```
 
 ## Regex
