@@ -84,3 +84,15 @@ docker tag txe1/simple-react-app txe1/simple-react-app:v1
 # Push To Server
 docker push yourusername/example-node-app:v1
 docker push txe1/simple-react-app:v1
+
+#######################
+# Docker Basic Tutorial
+#######################
+
+# Build Basic Docker From Dockerfile
+docker build -t <user>/<img-name> .
+docker build -t txe1/sample-frontend .
+
+# Run Image Locally
+docker run -p <outside-port>:<inside-port> --name <container-name> -d <docker-image>
+docker run -p 8080:80 --name gay-container -d txe1/sample-frontend .
