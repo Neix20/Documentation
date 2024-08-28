@@ -1,0 +1,7 @@
+# Create Jenkins Token
+kubectl create token -n jenkins jenkins-admin --duration=8760h
+
+# Add Cluster Role Binding
+kubectl create clusterrolebinding jenkins --clusterrole cluster-admin --serviceaccount=jenkins:jenkins-admin
+
+kubectl get svc -n jenkins
