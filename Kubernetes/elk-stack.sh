@@ -3,6 +3,9 @@
 # ELK Setup on Kubernetes Cluster
 #################################
 
+# Git Clone Url
+git clone https://github.com/hussainaphroj/ELK-kubernetes.git
+
 # Setup Cluster Role Binding for ELK
 # Create the service account which has read access to service, endpoint and namespaces
 kubectl apply -f rbac.yml
