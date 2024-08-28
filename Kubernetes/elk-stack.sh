@@ -6,6 +6,9 @@
 # Git Clone Url
 git clone https://github.com/hussainaphroj/ELK-kubernetes.git
 
+# Setup Ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+
 # Setup Cluster Role Binding for ELK
 # Create the service account which has read access to service, endpoint and namespaces
 kubectl apply -f rbac.yml
