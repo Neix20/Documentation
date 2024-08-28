@@ -182,3 +182,6 @@ kubectl exec -it <container-id> /bin/sh
 
 kubectl create namespace ns-go-p-th-ms01
 kubectl create namespace ns-go-p-ph-ms01
+
+# Set Current Config
+kubectl config set-context --current --namespace=kube-system
