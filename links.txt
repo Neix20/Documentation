@@ -1,2 +1,5 @@
 https://stackoverflow.com/questions/17404165/how-to-run-a-command-on-command-prompt-startup-in-windows
 https://superuser.com/questions/886951/run-powershell-script-when-you-open-powershell
+https://levelup.gitconnected.com/using-lua-instead-of-bash-for-automation-196d7e673535
+
+Run it using git bash
