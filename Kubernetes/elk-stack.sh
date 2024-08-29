@@ -3,6 +3,12 @@
 # ELK Setup on Kubernetes Cluster
 #################################
 
+## Use Kibana to View Logs
+
+curl http://kibana-ip:5601/app/kibana
+curl http://elastic-search-ip:9200/_cat/indices
+curl http://elastic-search-ip:9200/_cluster/health?pretty
+
 # Git Clone Url
 git clone https://github.com/hussainaphroj/ELK-kubernetes.git
 
