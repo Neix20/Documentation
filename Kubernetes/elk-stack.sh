@@ -6,6 +6,9 @@
 # Git Clone Url
 git clone https://github.com/hussainaphroj/ELK-kubernetes.git
 
+# Set Current Context
+kubectl config set-context --current --namespace=kube-system
+
 # Setup Ingress
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 
