@@ -2,6 +2,9 @@
 
 ## References
 
+Selenium Web Scraping with Docker (Headless Stuff)
+- <https://ploomber.io/blog/web-scraping-selenium-streamlit/>
+
 - <https://dev.to/prodevopsguytech/devops-project-high-level-monitoring-in-devops-png#:~:text=Monitoring%20is%20a%20crucial%20aspect,reliable%20and%20efficient%20software%20delivery.>
 
 <table>
