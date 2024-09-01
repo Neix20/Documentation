@@ -9,3 +9,5 @@
 
 - <https://github.com/antonbabenko/terraform-best-practices-workshop>
 - <https://github.com/antonbabenko/terraform-best-practices>
+- <https://collabnix.github.io/terraform/
+- >
