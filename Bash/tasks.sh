@@ -38,3 +38,5 @@ curl -X GET "localhost:5601/api/status" -H 'kbn-xsrf: true'
 # Get Software AG Version
 ./server.sh -version
 
+# Check OS Version
+cat /etc/os*
