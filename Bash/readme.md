@@ -1,6 +1,17 @@
 
 # Notes
 
+- [ ] Bash
+  - [ ] Put Network Information
+    - [ ] Windows / Linux
+    - [ ] tcpdump Basics
+    - [ ] Ip Basics
+  - [ ] Base64 Encode
+  - [ ] Base64 Decode
+  - [ ] Check OS Version
+  - [ ] Check Open Ports
+  - [ ] Check Process Running
+
 ## Most Commonly Used Bash Commands
 
 ```shell
