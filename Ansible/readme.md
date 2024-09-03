@@ -5,15 +5,74 @@ This directory is used for me to familiarize myself with Ansible Playbooks
 
 ## Repositories
 
-- <https://github.com/leucos/ansible-tuto>
-- <https://github.com/devopsjourney1/ansible-labs>
-- <https://github.com/mpsOxygen/ansible>
-- <https://medium.com/@thebaldevyadav/how-to-use-ansible-roles-b3345acd1cda>
-- <https://iam-athirakk.medium.com/mastering-ansible-roles-structuring-reusability-and-best-practices-6b593e8ac124>
+## Basics of Ansible
 
-## Commonly Used Modules For Ansible
+Lets first talk about file structure
 
-### File Operations
+```shell
+.
+├── ansible.cfg
+├── assets
+│   ├── auth.htpasswd
+│   ├── nginx.conf
+│   └── public.tar.gz
+├── inventory
+│   └── hosts
+├── neix-key
+├── playbooks
+│   └── starter.yml
+└── vm-witsh_key.pem
+```
+
+Within the folder, there will always be a `hosts`, `starter.yml` and optionally, `ansible.cfg`
+
+### What is Hosts File?
+
+Hosts file, is a file that contains all the server information of your servers.
+
+It contains:
+
+- Server IP
+- You may group the servers together, for example, `[ubuntu]`
+
+```yaml
+[ubuntu]
+20.15.97.91 ansible_ssh_user=root-witsh ansible_ssh_private_key_file=./Starter/vm-witsh_key.pem
+```
+
+### What is starter.yml?
+
+`starter.yml` is the main ansible playbook. Ansible playbook, is the type of file, where it contains all the server steps to run on your servers
+
+```yaml
+---
+- name: Starter Playbook for Fresh Server
+  hosts: ubuntu
+  become: true
+  vars: []
+  tasks:
+    - name: Update & Upgrade APT Version
+      ansible.builtin.apt:
+        force: true
+        update_cache: true
+        upgrade: "yes"
+```
+
+### What is ansible.cfg?
+
+`ansible.cfg` is similar to .env, where it is the configuration for Ansible. Here, you will store location of inventory hosts or other information
+
+```ini
+[defaults]
+INVENTORY = ./inventory/hosts
+
+[ssh_connections]
+pipelining = true
+```
+
+### Commonly Used Modules
+
+#### File Operations
 
 ```yaml
 - name: Copy a file
@@ -57,7 +116,7 @@ This directory is used for me to familiarize myself with Ansible Playbooks
     state: touch
 ```
 
-### HTTP Method
+#### HTTP Method
 
 ```yaml
 - name: Make HTTP Get Request
@@ -68,7 +127,7 @@ This directory is used for me to familiarize myself with Ansible Playbooks
   var: swapi
 ```
 
-### Archiving Operation
+#### Archiving Operation
 
 ```yaml
 - name: Unpackage deploy.tar.gz
@@ -86,7 +145,7 @@ This directory is used for me to familiarize myself with Ansible Playbooks
     format: zip
 ```
 
-### Shell Operations
+#### Shell Operations
 
 ```yaml
 - name: Check processes
@@ -103,7 +162,7 @@ This directory is used for me to familiarize myself with Ansible Playbooks
     state: started
 ```
 
-### Task Schedule Operations
+#### Task Schedule Operations
 
 ```yaml
 - name: Schedule a cron job
@@ -114,7 +173,7 @@ This directory is used for me to familiarize myself with Ansible Playbooks
     job: "/path/to/command"
 ```
 
-### Install File
+#### Install File
 
 ```yaml
 - name: "Install Nginx to version {{ nginx_version }}"
@@ -133,7 +192,7 @@ This directory is used for me to familiarize myself with Ansible Playbooks
     update_cache: true
 ```
 
-### Line In File
+#### Line In File
 
 ```yaml
 - name: Insert a line after a specific pattern
@@ -143,11 +202,114 @@ This directory is used for me to familiarize myself with Ansible Playbooks
     insertafter: "^Pattern to match"
 ```
 
-### File Templating
+#### File Templating
 
 ```yaml
 - name: Copy the Nginx configuration file to the host
   template:
     src: templates/nginx.conf.j2
     dest: /etc/nginx/sites-available/default
+```
+
+## Ansible Ad-Hoc Command
+
+```shell
+
+# Youtube
+# https://www.youtube.com/watch?v=w9eCU4bGgjQ
+# https://www.youtube.com/watch?v=SvcOwBFLVLM
+# https://www.youtube.com/watch?v=Z7p9-m4cimg
+
+# Docs
+# https://spacelift.io/blog/ansible-playbooks
+# https://github.com/leucos/ansible-tuto
+# https://stackoverflow.com/questions/57919339/how-to-run-ansible-playbook-using-a-public-ssh-key
+
+# Ansible Get Number of Modules
+ansible-doc -l | wc -l > /root/modules
+
+# Ping All File In Hosts
+ansible all -m ping
+
+# Run Ad Hoc Command
+ansible all -m shell -a 'hostname'
+
+# Format
+ansible <hosts-group> ...
+ansible servers -i /root/hosts -m ping
+
+# Ping All The Hosts
+ansible <hosts-group> -i <host-name> ...
+ansible ubuntu -i ./inventory/hosts -m ping --user ubuntu
+
+# List All Hosts in Ansible
+ansible-inventory -i /root/hosts --list
+
+# Graph Output
+ansible-inventory -i /root/hosts --graph
+
+# Yaml Output
+ansible-inventory -i /root/hosts --list -y
+
+# Get Servers Uptime
+ansible servers -i /root/hosts -m shell -a 'uptime'
+
+# Get Servers OS Version
+ansible -i /root/hosts <host-name> -m shell -a 'uname -a'
+ansible -i /root/hosts ubuntu -m shell -a 'uname -a'
+ansible -i /root/hosts servers  -m shell -a 'uname -a'
+
+ansible servers -i /root/hosts -m file -a 'path=/opt/deployment state=directory'
+ansible servers -i /root/hosts -m shell -a 'cd /opt && mkdir deployment'
+
+ansible servers -i /root/hosts -m copy -a 'src=/root/configfile.cfg dest=/opt/deployment'
+
+# Run Playbooks
+ansible-playbook -i <hosts-location> <playbook-location>
+ansible-playbook -i /root/hosts /root/deploy.yml
+
+```
+
+## Ansible Variables
+
+## Ansible Handlers
+
+## Ansible Templates
+
+## Ansible Roles
+
+## Ansible Galaxy
+
+For this scenario, assume we want to use Ansible to Install PHP on list of servers
+
+To Search for PHP Galaxy, use the following command
+
+```shell
+ansible-galaxy search "<term>"
+ansible-galaxy search "PHP"
+```
+
+Once you have searched for the term, you will be prompted a list. To download the galaxy, (similar to git), run the following command
+
+```shell
+Name                            Description
+----                            -----------
+alikins.php                     PHP for RedHat/CentOS/Fedora/Debian/Ubuntu.
+```
+
+```shell
+ansible-galaxy install alikins.php
+```
+
+To use the following role, add it to your `playbook.yml`
+
+```yaml
+---
+- hosts: all
+  become: true
+  roles:
+    - alikins.php
+  vars:
+    - doc_root: /var/www/example
+    - php_default_version_debian: "7.2"
 ```
