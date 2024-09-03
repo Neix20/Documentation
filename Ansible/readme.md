@@ -6,6 +6,8 @@ This directory is used for me to familiarize myself with Ansible Playbooks
 ## Repositories
 
 - <https://github.com/leucos/ansible-tuto>
+- <https://github.com/devopsjourney1/ansible-labs>
+- <https://github.com/mpsOxygen/ansible>
 
 ## Commonly Used Modules For Ansible
 
