@@ -1,0 +1,2 @@
+[ubuntu]
+20.15.97.91 ansible_ssh_user=root-witsh ansible_ssh_private_key_file=./Starter/vm-witsh_key.pem
