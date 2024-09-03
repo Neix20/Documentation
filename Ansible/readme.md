@@ -293,7 +293,35 @@ stage: dev
 
 ## Ansible Handlers
 
-Handlers are how ansible execute once the configuration is done
+*It is basically post-commit hooks, where it runs after you trigger a git push*
+
+Sometimes when a task does make a change to the system, an additional task or tasks may need to be run. For example, a change to a service’s configuration file may then require that the service be restarted so that the changed configuration takes effect.
+
+Here Ansible’s handlers come into play. Handlers can be seen as inactive tasks that only get triggered when explicitly invoked using the "notify" statement. Read more about them in the Ansible Handlers documentation.
+
+```yaml
+---
+- name: manage httpd.conf
+  hosts: web
+  become: true
+  tasks:
+  - name: Copy Apache configuration file
+    copy:
+      src: httpd.conf
+      dest: /etc/httpd/conf/
+    notify:
+        - restart_apache
+  handlers:
+    - name: restart_apache
+      service:
+        name: httpd
+        state: restarted
+```
+
+So what’s new here?
+
+The "notify" section calls the handler only when the copy task actually changes the file. That way the service is only restarted if needed - and not each time the playbook is run.
+The "handlers" section defines a task that is only run on notification.
 
 ## Ansible Templates
 
