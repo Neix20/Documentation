@@ -11,6 +11,8 @@
 - <https://github.com/antonbabenko/terraform-best-practices>
 - <https://collabnix.github.io/terraform/>
 
+In Terraform, a data block is a way to retrieve data from external sources, such as AWS, Azure, or Google Cloud, and use it in your Terraform configuration. Data blocks are useful when you need to fetch data that is not known until runtime, or when you want to avoid hardcoding sensitive information like API keys or passwords.
+
 ## Verbose Steps
 
 1. Declare Terraform Provider
