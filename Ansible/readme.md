@@ -272,11 +272,36 @@ ansible-playbook -i /root/hosts /root/deploy.yml
 
 ## Ansible Variables
 
+To use variables inside your playbook, wrap your variable in `{{` and ``}}``
+
+```shell
+Here comes a variable {{ variable1 }}
+```
+
+To use variable, you need 2 folders, `host_vars` and `group_vars`
+
+`host_vars` is where you place the hosts directly, for example `node02.yml`
+
+`group_vars` is where you place the groups directly, for example, `server.yml`
+
+Place it in a yaml format
+
+```yaml
+---
+stage: dev
+```
+
 ## Ansible Handlers
+
+Handlers are how ansible execute once the configuration is done
 
 ## Ansible Templates
 
+Template is how you replace a file
+
 ## Ansible Roles
+
+Roles is basically Ansible Modules, or Library, if you want programtically
 
 ## Ansible Galaxy
 
