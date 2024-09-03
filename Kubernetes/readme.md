@@ -8,6 +8,7 @@
 - <https://stackoverflow.com/questions/53207059/react-nginx-routing-to-subdirectory>
 - <https://stackoverflow.com/questions/75350543/how-to-build-a-vite-project-with-homepage-set-to-more-details-given-below>
 - https://www.elastic.co/jp/blog/how-to-run-elastic-cloud-on-kubernetes-from-azure-kubernetes-service
+- https://readmedium.com/en/difference-between-kubectl-kind-minikube-kubeadm-and-kubelet-ff14798c70ce
 
 ## Kubernetes Terminology
 
