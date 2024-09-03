@@ -8,6 +8,8 @@ This directory is used for me to familiarize myself with Ansible Playbooks
 - <https://github.com/leucos/ansible-tuto>
 - <https://github.com/devopsjourney1/ansible-labs>
 - <https://github.com/mpsOxygen/ansible>
+- <https://medium.com/@thebaldevyadav/how-to-use-ansible-roles-b3345acd1cda>
+- <https://iam-athirakk.medium.com/mastering-ansible-roles-structuring-reusability-and-best-practices-6b593e8ac124>
 
 ## Commonly Used Modules For Ansible
 
