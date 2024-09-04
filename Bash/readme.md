@@ -248,6 +248,13 @@ cat /etc/*release
 
 ```shell
 ps -ef
+ps aux
+```
+
+### Kill Process
+
+```shell
+kill -9 <proc-id>
 ```
 
 ### Check All Open Ports
