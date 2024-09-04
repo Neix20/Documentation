@@ -1,17 +1,6 @@
 
 # Notes
 
-- [ ] Bash
-  - [ ] Put Network Information
-    - [ ] Windows / Linux
-    - [ ] tcpdump Basics
-    - [ ] Ip Basics
-  - [ ] Base64 Encode
-  - [ ] Base64 Decode
-  - [ ] Check OS Version
-  - [ ] Check Open Ports
-  - [ ] Check Process Running
-
 ## Most Commonly Used Bash Commands
 
 ```shell
@@ -56,6 +45,7 @@ du -h --max-depth=1
 
 ```shell
 df -h
+lsblk
 ```
 
 ### Mount USB
@@ -247,4 +237,8 @@ vim -d index.md test.md
 ```shell
 git logs | vim -R -
 ```
+
+### Encode 64
+
+### Decode 64
 
