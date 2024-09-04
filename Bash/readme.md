@@ -238,7 +238,76 @@ vim -d index.md test.md
 git logs | vim -R -
 ```
 
+### Check Linux Version
+
+```shell
+cat /etc/*release
+```
+
+### List All Process Running
+
+```shell
+ps -ef
+```
+
+### Check All Open Ports
+
+```shell
+lsof -i -P -n | grep LISTEN
+```
+
+### Check All Network Interface
+
+```shell
+tcpdump -D
+netstat -i
+ifconfig -a
+ip addr show
+```
+
+### Get Your IP Address
+
+```shell
+# Linux / Mac
+ip addr
+
+# Windows
+ipconfig /all
+```
+
+### Tcp Dump
+
+#### Capture Packet
+
+```shell
+tcpdump -i enp1s0 -c 5 -w trash.pcap
+tcpdump -i 1 -c 5 -w tcpdump.pcap
+```
+
+### NetCat
+
+#### Open Socket using netcat
+
+```shell
+nc -l -p <port-number>
+nc -l -p 1234
+```
+
+#### Connect To Open Socket
+
+```shell
+nc <ip-address> 1234
+nc node01 1234
+```
+
 ### Encode 64
+
+```shell
+echo "Hello, World!" | base64 -w 80
+```
 
 ### Decode 64
 
+```shell
+echo "SGVsbG8sIFdvcmxkIQo=" | base64 -d
+```
