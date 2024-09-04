@@ -311,3 +311,40 @@ echo "Hello, World!" | base64 -w 80
 ```shell
 echo "SGVsbG8sIFdvcmxkIQo=" | base64 -d
 ```
+### List all Ips in your Local Network
+
+```shell
+arp -a
+```
+
+```shell
+# brute force attack
+for ip in $(seq 1 254); do 
+    ping -c 1 192.168.1.$ip; 
+done
+```
+
+### Get My Username
+
+```shell
+hostname
+whoami
+```
+
+### Set SSH Password
+
+```shell
+sudo passwd <username>
+sudo passwd justin
+```
+
+### Multi Line Cat File
+
+```shell
+cat <<EOF
+$(cat ./index.md | head -n $line_num)
+- [$date](./logs/$date/index.md)
+$(cat ./index.md | tail -n 2)
+EOF
+```
+
