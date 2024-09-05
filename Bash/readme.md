@@ -355,3 +355,28 @@ $(cat ./index.md | tail -n 2)
 EOF
 ```
 
+### SystemCtl
+
+#### Check Process Status
+
+```shell
+sudo systemctl status <process-name>
+```
+
+#### Restart Process
+
+```shell
+sudo systemctl restart <process-name>
+```
+
+#### Start Process
+
+```shell
+sudo systemctl start <process-name>
+```
+
+#### Stop Process
+
+```shell
+sudo systemctl stop <process-name>
+```
