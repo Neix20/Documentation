@@ -314,13 +314,10 @@ Here Ansible’s handlers come into play. Handlers can be seen as inactive tasks
 ```yaml
 ---
 - name: manage httpd.conf
-  hosts: web
-  become: true
+  ...
   tasks:
   - name: Copy Apache configuration file
-    copy:
-      src: httpd.conf
-      dest: /etc/httpd/conf/
+    ....
     notify:
         - restart_apache
   handlers:
