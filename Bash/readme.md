@@ -387,3 +387,13 @@ sudo systemctl stop <process-name>
 timeout 3 nc -vz <ip-address> <port-num>
 timeout 3 nc -vz 192.168.0.3 1234
 ```
+
+### Get IP of Websites
+
+```shell
+nslookup <website>
+dig <website>
+
+nslookup google.com
+dig google.com
+```
