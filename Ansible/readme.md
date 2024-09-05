@@ -265,6 +265,9 @@ ansible -i /root/hosts <host-name> -m shell -a 'uname -a'
 ansible -i /root/hosts ubuntu -m shell -a 'uname -a'
 ansible -i /root/hosts servers  -m shell -a 'uname -a'
 
+# Get Information About Servers
+ansible -i /root/hosts servers  -m setup
+
 ansible servers -i /root/hosts -m file -a 'path=/opt/deployment state=directory'
 ansible servers -i /root/hosts -m shell -a 'cd /opt && mkdir deployment'
 
