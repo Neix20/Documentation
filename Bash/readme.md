@@ -397,3 +397,25 @@ dig <website>
 nslookup google.com
 dig google.com
 ```
+
+### Setup HTTP SSL
+
+```shell
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot certonly --nginx
+```
+
+### Install Docker
+
+```shell
+sudo snap install docker
+```
+
+### Setup SSH
+
+```shell
+sudo vim /etc/ssh/sshd_config
+sudo service ssh restart
+```
