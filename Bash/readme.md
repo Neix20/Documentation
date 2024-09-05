@@ -380,3 +380,10 @@ sudo systemctl start <process-name>
 ```shell
 sudo systemctl stop <process-name>
 ```
+
+### Check If Port is Open from External Computer
+
+```shell
+timeout 3 nc -vz <ip-address> <port-num>
+timeout 3 nc -vz 192.168.0.3 1234
+```
