@@ -268,6 +268,9 @@ ansible -i /root/hosts servers  -m shell -a 'uname -a'
 # Get Information About Servers
 ansible -i /root/hosts servers  -m setup
 
+# Filter With Specific Information
+ansible servers -i /root/hosts -m setup -a 'filter=ansible_distribution' > /root/version
+
 ansible servers -i /root/hosts -m file -a 'path=/opt/deployment state=directory'
 ansible servers -i /root/hosts -m shell -a 'cd /opt && mkdir deployment'
 
