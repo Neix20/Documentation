@@ -35,6 +35,12 @@ s/(.|\n)*?//g
 
 ## Helpful Scripts
 
+### Run Every Command without prompt
+
+```shell
+sudo apt install <process> -y
+```
+
 ### Get Directory / Folder Size
 
 ```shell
