@@ -343,6 +343,10 @@ Template is how you replace a file
 
 Roles is basically Ansible Modules, or Library, if you want programtically
 
+```shell
+ansible-galaxy init role_name
+```
+
 ## Ansible Galaxy
 
 For this scenario, assume we want to use Ansible to Install PHP on list of servers
