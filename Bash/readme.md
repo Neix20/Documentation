@@ -78,6 +78,16 @@ sudo umount /mnt/usb
 sed -i "$line_num"i"$data" ./index.md
 ```
 
+### Print Line By Line Number
+
+```shell
+sed -n '2p' filename #get the 2nd line and prints the value (p stands for print)
+
+sed -n '1,2p' filename #get the 1 to 2nd line and prints the values
+
+sed -n '1p;2p;' filename #get the 1st and 2nd line values only
+```
+
 ### Get Line Number
 
 ```shell
