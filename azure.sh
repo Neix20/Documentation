@@ -18,3 +18,11 @@ az aks get-credentials -g <rg-name> -n <aks-cluster-name>
 # Set Current Context
 kubectl config set-context <aks-cluster-name> --namespace=<aks-namespace>
 
+# Delete Current Context
+kubectl config delete-context <aks-cluster-name>
+
+# Clear Account
+az account clear
+
+
+
