@@ -67,7 +67,7 @@ function git_export_version() {
 function fortune() {
   # Parameters
   file_path="/c/Users/E138807/Documents/fortune.json"
-  url="https://raw.githubusercontent.com/Neix20/Dotfiles/master/fortunes/data.json"
+  url="https://github.com/Neix20/Dotfiles/edit/main/fortune/data.json"
 
   # Check if fortune file exists
   if [ ! -f "$file_path" ]; then
