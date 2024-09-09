@@ -8,3 +8,7 @@ Collections of DevOps Snippets and tools that I've used
 ## SQL
 
 - <https://www.avestura.dev/blog/explaining-the-postgres-meme>
+
+## List of Important Software
+
+Cisco Packet Tracer
