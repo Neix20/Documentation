@@ -487,11 +487,6 @@ export subject_alt_name=DNS:<site_name>.<domain>,DNS:<site-sub/internaldns>
 openssl req -config openssl.cnf -key <domain>/<program/project>/<site_name>/<site_name>.<domain>.key -reqexts v3_req_server -new -sha256 -out <domain>/<program/project>/<site_name>/<site_name>.<domain>.csr
 ```
 
-
-# Notes
-
-## Trash
-
 ### FFMpeg
 
 #### Split Video Into Frame
