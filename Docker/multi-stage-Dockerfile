@@ -1,4 +1,5 @@
 FROM node:12 AS build
+# FROM --platform=linux/amd64 node:12 AS build
 
 # Create app directory
 WORKDIR /usr/src
