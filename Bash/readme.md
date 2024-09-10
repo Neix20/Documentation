@@ -444,3 +444,44 @@ sudo snap install docker
 sudo vim /etc/ssh/sshd_config
 sudo service ssh restart
 ```
+
+### OpenSSL
+
+```shell
+
+# Check CSR Locally
+openssl req -in <csr-location> -noout -text
+
+# Check Private Key
+openssl rsa -in privateKey.key -check
+
+# Check Certificate
+openssl x509 -in certificate.crt -text -noout
+
+# Check PKCS#12 File
+openssl pkcs12 -info -in keyStore.p12
+
+# Generate CSR
+openssl req -out CSR.csr -new -newkey rsa:2048 -nodes -keyout privateKey.key
+
+# Generate Self-Signed Certificate
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
+
+# Generate a CSR for an existing private key
+openssl req -out CSR.csr -key privateKey.key -new
+
+# Generate a CSR based on existing certificate
+openssl x509 -x509toreq -in certificate.crt -out CSR.csr -signkey privateKey.key
+
+# Remove Passphrase from Private Key
+openssl rsa -in privateKey.pem -out newPrivateKey.pem
+
+# Generate a private Key
+openssl genrsa -aes256 -out <domain>/<program/project>/<site_name>/<site_name>.<domain>.key 2048
+
+# Generate a CSR
+
+export subject_alt_name=DNS:<site_name>.<domain>,DNS:<site-sub/internaldns>
+
+openssl req -config openssl.cnf -key <domain>/<program/project>/<site_name>/<site_name>.<domain>.key -reqexts v3_req_server -new -sha256 -out <domain>/<program/project>/<site_name>/<site_name>.<domain>.csr
+```
