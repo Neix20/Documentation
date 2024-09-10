@@ -492,13 +492,13 @@ openssl req -config openssl.cnf -key <domain>/<program/project>/<site_name>/<sit
 #### Split Video Into Frame
 
 ```shell
-ffmpeg -ss 00:00:00 -t 00:30:00 -i trans.mp4 -r 1 image-%03d.png
+ffmpeg -ss 00:00:00 -t 00:30:00 -i trans.mp4 -r 1 img/image%d.png
 ```
 
 #### Combine Frame into Video
 
 ```shell
-ffmpeg -framerate 5 -y -i img\\image%d.jpg -c:v h264 -r 30 -pix_fmt yuv420p output.mp4
+ffmpeg -framerate 5 -y -i img/image%d.png -c:v h264 -r 30 -pix_fmt yuv420p output.mp4
 ```
 
 #### Merge Image And Audio
