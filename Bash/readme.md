@@ -463,6 +463,7 @@ openssl pkcs12 -info -in keyStore.p12
 
 # Generate CSR
 openssl req -out CSR.csr -new -newkey rsa:2048 -nodes -keyout privateKey.key
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout cert.key -out cert.crt -subj "/CN=world.universe.mine/O=world.universe.mine"
 
 # Generate Self-Signed Certificate
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
