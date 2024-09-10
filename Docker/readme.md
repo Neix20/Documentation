@@ -1,5 +1,10 @@
 # Docker Terminology
 
+## Docker Build Fails on Mac M1 Chip
+
+- <https://stackoverflow.com/questions/73398714/docker-fails-when-building-on-m1-macs-exec-usr-local-bin-docker-entrypoint-sh>
+- <https://stackoverflow.com/questions/65612411/forcing-docker-to-use-linux-amd64-platform-by-default-on-macos>
+
 ## References
 
 Selenium Web Scraping with Docker (Headless Stuff)
