@@ -485,3 +485,98 @@ export subject_alt_name=DNS:<site_name>.<domain>,DNS:<site-sub/internaldns>
 
 openssl req -config openssl.cnf -key <domain>/<program/project>/<site_name>/<site_name>.<domain>.key -reqexts v3_req_server -new -sha256 -out <domain>/<program/project>/<site_name>/<site_name>.<domain>.csr
 ```
+
+
+# Notes
+
+## Trash
+
+### FFMpeg
+
+#### Split Video Into Frame
+
+```shell
+ffmpeg -ss 00:00:00 -t 00:30:00 -i trans.mp4 -r 1 image-%03d.png
+```
+
+#### Combine Frame into Video
+
+```shell
+ffmpeg -framerate 5 -y -i img\\image%d.jpg -c:v h264 -r 30 -pix_fmt yuv420p output.mp4
+```
+
+#### Merge Image And Audio
+
+```shell
+ffmpeg -i gift.jpg -i hari_raya.mp3 overlay_video.mp4
+```
+
+#### Merge Video And Audio
+
+```shell
+ffmpeg -i video/hoho.mp4 -i audio/mDay_I.mp3 -shortest output.mp4
+```
+
+#### Overlay Video And Green Screen Video
+
+```shell
+ffmpeg -i green_screen.mp4 -i overlay_video.mp4 -filter_complex "[0:v]chromakey=0x50f433:0.1:0.2[ckout];[1:v][ckout]overlay=0:0" output.mp4
+```
+
+#### Convert Green Screen Video into Transparent Video
+
+```shell
+ffmpeg -i video/green_screen.mp4 -i img/trans.png -filter_complex "[0:v]chromakey=0x50f433:0.1:0.2[ckout];[1:v][ckout]overlay=0:0" -f gif output.gif
+```
+
+#### Extract Audio From Video
+
+```shell
+ffmpeg -i input_video.mp4 -q:a 0 -map a output_audio.mp3
+```
+
+#### Crop Video To Timestamp (E.g. 10 Seconds)
+
+```shell
+ffmpeg -i input_video.mp4 -ss 00:00:00 -t 00:00:10 -c copy output_video.mp4
+```
+
+#### Crop Audio To Timestamp (E.g. 10 Seconds)
+
+```shell
+ffmpeg -i input_audio.mp3 -ss 00:00:00 -t 00:00:10 -c copy output_audio.mp3
+```
+
+### Youtube DL
+
+#### Installing Youtube-DL
+
+```shell
+pip install --upgrade --force-reinstall git+https://github.com/ytdl-org/youtube-dl.git
+```
+
+#### Download Youtube Video
+
+```shell
+youtube-dl <https://www.youtube.com/watch?v=E-PrhaMCIks> -f mp4
+```
+
+#### Download Youtube Audio
+
+```shell
+youtube-dl <https://www.youtube.com/watch?v=esh8mNoPxGE> -x --audio-format mp3
+```
+
+### Image Magick
+
+#### Get Image Info
+
+```shell
+magick identify 1705890706514.jpg
+```
+
+#### Resize Image to Specific Size
+
+```shell
+convert 1705890706514.jpg -resize 1290x2796! new.jpg
+```
