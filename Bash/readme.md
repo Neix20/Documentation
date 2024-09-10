@@ -580,3 +580,15 @@ magick identify 1705890706514.jpg
 ```shell
 convert 1705890706514.jpg -resize 1290x2796! new.jpg
 ```
+
+#### Convert Image Format
+
+```shell
+magick input.webp output.jpg
+```
+
+#### Remove Background
+
+```shell
+convert image.png -background white -alpha remove -alpha off white.png
+```
