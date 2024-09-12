@@ -31,8 +31,11 @@ tee         # Write to file in midst of long commands
 
 `tee` command is to write into a file, in the midst of it, while still pipe it to other output
 
-```shell
 command | tee [option] file | command
+
+```shell
+# To tee stdout to the terminal, and also pipe it into another program for further processing:
+ls | tee /dev/tty | xargs printf "\033[1;34m%s\033[m\n"
 ```
 
 ## Regex
