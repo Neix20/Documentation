@@ -27,17 +27,6 @@ xargs       # Pass Output to other commands as Parameters
 tee         # Write to file in midst of long commands
 ```
 
-## Tee Command
-
-`tee` command is to write into a file, in the midst of it, while still pipe it to other output
-
-command | tee [option] file | command
-
-```shell
-# To tee stdout to the terminal, and also pipe it into another program for further processing:
-ls | tee /dev/tty | xargs printf "\033[1;34m%s\033[m\n"
-```
-
 ## Regex
 
 One Rule to Control All
@@ -47,6 +36,32 @@ s/(.|\n)*?//g
 ```
 
 ## Helpful Scripts
+
+### Xargs Command
+
+`xargs` command is to pass output to other command as new parameters
+
+```shell
+kubectl get pod | grep 'frontend' | awk '{ print $1 }' | xargs kubectl logs
+
+# Normally to get the log, we need to write like this
+kubectl logs <pod-name>
+kubectl logs xxx-frontend-xxx-xxx
+
+# But, to copy paste this pod name is a bit redundant.
+# Therefore, we will use pod to grep the keyword 'frontend', and then pass it to kubectl logs as parameter
+```
+
+### Tee Command
+
+`tee` command is to write into a file, in the midst of it, while still pipe it to other output
+
+command | tee [option] file | command
+
+```shell
+# To tee stdout to the terminal, and also pipe it into another program for further processing:
+ls | tee /dev/tty | xargs printf "\033[1;34m%s\033[m\n"
+```
 
 ### SCP Tutorial
 
