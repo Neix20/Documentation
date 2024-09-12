@@ -44,6 +44,14 @@ s/(.|\n)*?//g
 # Run a shell script that can live beyond the terminal:
 nohup path/to/script.sh &
 ```
+#### List all Services Started by Nohup
+
+```shell
+jobs -l
+
+# To Kill Services
+kill -9 <pid>
+```
 
 ### Xargs Command
 
