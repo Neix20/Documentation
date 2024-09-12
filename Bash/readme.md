@@ -134,6 +134,13 @@ sudo umount /mnt/usb
 sed -i "$line_num"i"$data" ./index.md
 ```
 
+### Print out the Nth Line
+
+```shell
+sed -n '<number>p'
+jobs -l | sed -n '2p'
+```
+
 ### Print Line By Line Number
 
 ```shell
