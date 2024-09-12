@@ -25,6 +25,7 @@ systemctl   # Check Service Status
 &           # Run Command in Background
 xargs       # Pass Output to other commands as Parameters
 tee         # Write to file in midst of long commands
+nohup       # Allows for a process to live when the terminal gets killed
 ```
 
 ## Regex
@@ -36,6 +37,13 @@ s/(.|\n)*?//g
 ```
 
 ## Helpful Scripts
+
+### Nohup Command
+
+```shell
+# Run a shell script that can live beyond the terminal:
+nohup path/to/script.sh &
+```
 
 ### Xargs Command
 
