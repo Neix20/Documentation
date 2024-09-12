@@ -613,6 +613,13 @@ magick identify 1705890706514.jpg
 convert 1705890706514.jpg -resize 1290x2796! new.jpg
 ```
 
+#### Crop Image by Specific Coordinates
+
+```shell
+convert input_image.jpg -crop widthxheight+x+y output_image.jpg
+convert input_image.jpg -crop 100x50+10+20 output_image.jpg
+```
+
 #### Convert Image Format
 
 ```shell
