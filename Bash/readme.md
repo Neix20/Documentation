@@ -23,6 +23,16 @@ mkdir       # Create Directory
 rmdir       # Remove Directory
 systemctl   # Check Service Status
 &           # Run Command in Background
+xargs       # Pass Output to other commands as Parameters
+tee         # Write to file in midst of long commands
+```
+
+## Tee Command
+
+`tee` command is to write into a file, in the midst of it, while still pipe it to other output
+
+```shell
+command | tee [option] file | command
 ```
 
 ## Regex
