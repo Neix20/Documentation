@@ -66,6 +66,9 @@ kubectl logs xxx-frontend-xxx-xxx
 
 # But, to copy paste this pod name is a bit redundant.
 # Therefore, we will use pod to grep the keyword 'frontend', and then pass it to kubectl logs as parameter
+
+# Kill Process ID using jobs -l
+jobs -l | awk '{ print $2 }' | xargs kill -9
 ```
 
 ### Tee Command
