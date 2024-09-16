@@ -397,6 +397,7 @@ echo "Hello, World!" | base64 -w 80
 ```shell
 echo "SGVsbG8sIFdvcmxkIQo=" | base64 -d
 ```
+
 ### List all Ips in your Local Network
 
 ```shell
@@ -484,12 +485,6 @@ sudo snap install core; sudo snap refresh core
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot certonly --nginx
-```
-
-### Install Docker
-
-```shell
-sudo snap install docker
 ```
 
 ### Setup SSH
@@ -649,3 +644,16 @@ magick input.webp output.jpg
 ```shell
 convert image.png -background white -alpha remove -alpha off white.png
 ```
+
+### Wifi
+
+#### Linux
+
+```shell
+# List all Wifi Connections
+nmcli dev wifi
+
+# Connect to Wifi With Username and password
+nmcli device wifi connect <wifi-name> <wifi-password>
+nmcli device wifi connect neix-home@unifi xxx888
+`
