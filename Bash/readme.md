@@ -645,6 +645,21 @@ magick input.webp output.jpg
 convert image.png -background white -alpha remove -alpha off white.png
 ```
 
+```shell
+function resize_img() {
+  convert $1 -resize 1290x2796! $1
+}
+
+function crop_image_android() {
+  read w h < <(identify -format "%w %h" $1)
+  convert $1 -crop "$w"x$((h*91/100))+0+$((h*4/100)) $1
+}
+
+function crop_half_image() {
+  convert ~/Downloads/Yatu\ Lite/Multiple.jpg -crop 50%x100% +repage ~/Downloads/Yatu\ Lite/output%d.jpg
+}
+```
+
 ### Wifi
 
 #### Linux
@@ -676,10 +691,28 @@ netsh wlan show networks
 # Create a Wifi Profile
 netsh wlan show profiles
 
-# Connext to Wifi With Username and Password (Requires Profile)
+# Connect to Wifi With Username and Password (Requires Profile)
 netsh wlan connect ssid=<ssid-name> name=<profile-name> interface="<interface-name>"
 
 # Show Password
 netsh wlan show profile name="<profile-name>" key="clear"
 netsh wlan show profile name="neix_deco" key="clear"
+```
+
+#### MacOs
+
+- <https://sharmank.medium.com/how-to-connect-to-wifi-using-mac-os-command-line-3a76c2e6669c>
+- <https://apple.stackexchange.com/questions/176119/how-to-access-the-wi-fi-password-through-terminal>
+
+```shell
+# List All Wifi Connections
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s
+
+# Connect to Wifi With Username and Password
+networksetup -setairportnetwork en0 <SSID_OF_NETWORK> <PASSWORD>
+networksetup -setairportnetwork en0 "$1" "$2"
+
+# Show Password
+security find-generic-password -ga <wifi-name> | grep "password:"
+security find-generic-password -ga neix_deco | grep "password:"
 ```
