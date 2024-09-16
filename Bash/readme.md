@@ -649,6 +649,9 @@ convert image.png -background white -alpha remove -alpha off white.png
 
 #### Linux
 
+- <https://askubuntu.com/questions/377687/how-do-i-connect-to-a-wifi-network-using-nmcli>
+- <https://askubuntu.com/questions/156861/find-the-password-for-the-currently-connected-wireless-network>
+
 ```shell
 # List all Wifi Connections
 nmcli dev wifi
@@ -656,4 +659,27 @@ nmcli dev wifi
 # Connect to Wifi With Username and password
 nmcli device wifi connect <wifi-name> <wifi-password>
 nmcli device wifi connect neix-home@unifi xxx888
-`
+
+# Show Password
+nmcli dev wifi show-password
+```
+
+#### Windows
+
+- <https://superuser.com/questions/1157209/how-to-connect-to-a-wifi-using-cmd-only>
+- <https://superuser.com/questions/1604729/connecting-to-wifi-network-from-command-prompt>
+
+```shell
+# List all Wifi Connections
+netsh wlan show networks
+
+# Create a Wifi Profile
+netsh wlan show profiles
+
+# Connext to Wifi With Username and Password (Requires Profile)
+netsh wlan connect ssid=<ssid-name> name=<profile-name> interface="<interface-name>"
+
+# Show Password
+netsh wlan show profile name="<profile-name>" key="clear"
+netsh wlan show profile name="neix_deco" key="clear"
+```
