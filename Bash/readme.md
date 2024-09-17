@@ -112,6 +112,8 @@ lsblk
 
 ### Mount USB
 
+- <https://linuxconfig.org/how-to-partition-usb-drive-in-linux>
+
 ```shell
 
 ## Identify the USB Drive
