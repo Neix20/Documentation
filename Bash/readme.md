@@ -126,6 +126,12 @@ sudo mount /dev/sdb1 /mnt/usb
 
 ## Unmount USB Drive
 sudo umount /mnt/usb
+
+### Format Disk to FAT32
+sudo mkfs.vfat /dev/[device_name]
+
+### Verify Disks
+sudo fsck /dev/[device_name]
 ```
 
 ### Insert String by Line Number
