@@ -61,6 +61,9 @@ echo $! > test.pid
 #### List all Services Started by Nohup
 
 ```shell
+
+# List All Background Processes
+# Includes "&" and "nohup"
 jobs -l
 
 # To Kill Services
