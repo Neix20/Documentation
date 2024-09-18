@@ -40,9 +40,23 @@ s/(.|\n)*?//g
 
 ### Nohup Command
 
+- [Difference between "&" and "nohup"](https://stackoverflow.com/questions/13338870/what-does-at-the-end-of-a-linux-command-mean)
+
 ```shell
-# Run a shell script that can live beyond the terminal:
+# Run a shell script that can live beyond the terminal (Current Session):
+path/to/script.sh &
+
+# Run a shell script that can live beyond the terminal (After SSH Session):
 nohup path/to/script.sh &
+
+# Write Output of Command
+nohup ping google.com > output.txt &
+
+# Pipe StdErr and StdOutput to Same Place
+nohup ping google.com > output.txt 2>&1 &
+
+# Echo Process Id to File
+echo $! > test.pid
 ```
 #### List all Services Started by Nohup
 
