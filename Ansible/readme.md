@@ -208,6 +208,39 @@ pipelining = true
     insertafter: "^Pattern to match"
 ```
 
+```yaml
+- name: Insert a line based on line number
+  lineinfile:
+    path: /home/ubuntu/file.txt
+    line: "This is the new line"
+    insertafter: 5
+```
+
+```yaml
+- name: Replace Line Based on Regex, Lines that start with var1
+  lineinfile:
+    path: /path/to/file.txt
+    regexp: "^var1"
+    line: "var1=111111"
+```
+
+```yaml
+- name: Insert a New line
+  lineinfile:
+    path: /path/to/file.txt
+    line: "Line To Replace"
+    state: present
+    create: true
+```
+
+```yaml
+- name: Remove Line
+  lineinfile:  
+    path: /path/to/file.txt
+    regexp: "^Pattern to match"
+    state: absent
+```
+
 #### File Templating
 
 ```yaml
