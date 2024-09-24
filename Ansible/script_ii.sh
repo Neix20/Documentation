@@ -13,17 +13,16 @@ ansible all -m shell -a 'hostname'
 
 ansible servers -i /root/hosts -m ping
 
+# Relative Directory
+ansible servers -i hosts -m ping
+
 # List All Hosts in Ansible
-ansible-inventory -i /root/hosts --list
-
-# Graph Output
-ansible-inventory -i /root/hosts --graph
-
-# Yaml Output
-ansible-inventory -i /root/hosts --list -y
+ansible-inventory -i hosts --list
+ansible-inventory -i hosts --graph
+ansible-inventory -i hosts --list -y
 
 # Get Servers Uptime
-ansible servers -i /root/hosts -m shell -a 'uptime'
+ansible servers -i hosts -m shell -a 'uptime'
 
 # Get Servers OS Version
 ansible -i /root/hosts <host-name> -m shell -a 'uname -a'
@@ -44,3 +43,7 @@ ansible-galaxy init update
 ansible-playbook -i /root/hosts /root/playbooks/environment.yml --tags=update
 ansible-playbook -i /root/hosts /root/playbooks/environment.yml --tags=insert
 
+ansible-playbook -i hosts environment.yml --tags=insert
+
+ansible-playbook -i ./hosts /root/custom_fact_push.yml
+ansible-playbook -i ./hosts playbook.yml
