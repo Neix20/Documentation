@@ -6,6 +6,7 @@
 - <https://thevaluable.dev/vim-advanced/>
 - <https://vim.rtorr.com/>
 - <https://github.com/gnperdue/CheatSheets/blob/master/VIM.markdown>
+- <https://stackoverflow.com/questions/1694392/vim-store-output-of-external-command-into-a-register>
 
 ## Thoughts
 
