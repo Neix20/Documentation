@@ -376,6 +376,13 @@ ifconfig -a
 ip addr show
 ```
 
+### Check for Which Ports is Being Monitored
+
+```shell
+netstat -an
+```
+
+
 ### Get Your IP Address
 
 ```shell
