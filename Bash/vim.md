@@ -26,9 +26,17 @@
     - [x] `cgn`
     - [x] Use Macros
     - [x] :global/foo/yank C <https://vi.stackexchange.com/questions/29603/how-to-multi-select-for-the-purpose-of-copy-operation>
-  - [x] VimGolf
-    - [ ] `:g/f/,+3m0<CR>@:ZZ` Move Lines
-    - [ ] `Ctrl V` to Move Lines then Prepend (Multi-Cursor!!!) (Can't Edit in Real Time Though)
-    - [ ] `d/<term><CR>` This is to delete to that character (Multi-Line)
-    - [ ] `*`, `#` to Select Character (Similar to `F2`)
-    - [ ] `/`, `?` to find characters from top or bottom
+- [x] VimGolf
+  - [ ] `:g/f/,+3m0<CR>@:ZZ` Move Lines
+  - [ ] `Ctrl V` to Move Lines then Prepend (Multi-Cursor!!!) (Can't Edit in Real Time Though)
+  - [ ] `d/<term><CR>` This is to delete to that character (Multi-Line)
+  - [ ] `*`, `#` to Select Character (Similar to `F2`)
+  - [ ] `/`, `?` to find characters from top or bottom
+  - [ ] <https://github.com/bkbncn/VimGolf-solutions>
+  - [ ] Select All Non-Empty Lines
+    - [ ] `:g/./norm I*`
+    - [ ] `:%s/\v(^.)/*\1/g`
+    - [ ] `:%s/^\ze./*`
+    - [ ] `:%s/^./*&/`
+    - [ ] `:%s/./*&`
+    - [ ] `<C-V>GyP<C-V>Gr*ZZ`
