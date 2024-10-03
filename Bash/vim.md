@@ -27,7 +27,7 @@
     - [x] Use Macros
     - [x] :global/foo/yank C <https://vi.stackexchange.com/questions/29603/how-to-multi-select-for-the-purpose-of-copy-operation>
 - [x] VimGolf
-  - [ ] `:g/f/,+3m0<CR>@:ZZ` Move Lines
+  - [ ] `:g/f/,+3m0<CR>@:ZZ` Move 3 Lines to Top
   - [ ] `Ctrl V` to Move Lines then Prepend (Multi-Cursor!!!) (Can't Edit in Real Time Though)
   - [ ] `d/<term><CR>` This is to delete to that character (Multi-Line)
   - [ ] `*`, `#` to Select Character (Similar to `F2`)
@@ -40,3 +40,5 @@
     - [ ] `:%s/^./*&/`
     - [ ] `:%s/./*&`
     - [ ] `<C-V>GyP<C-V>Gr*ZZ`
+  - [ ] Redirect Command Line Output To Variable
+    - [ ] `:r !python ~/Documents/Helper/rand-int.py`
