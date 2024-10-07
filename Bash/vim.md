@@ -46,3 +46,5 @@
     - [ ] `=len("-----")`
   - [ ] To Save Characters on macro that is double decimal
     - [ ] `q15@q` => `@qq@q` (Benefit is that you dont need to count the number of macros!!!)
+  - [ ] Run Macro On Selected Lines
+    - [ ] '<,'>norm @q
