@@ -130,6 +130,7 @@ lsblk
 ### Mount USB
 
 - <https://linuxconfig.org/how-to-partition-usb-drive-in-linux>
+- <https://askubuntu.com/questions/11840/how-do-i-use-chmod-on-an-ntfs-or-fat32-partition>
 
 ```shell
 
@@ -142,6 +143,7 @@ sudo mkdir /mnt/usb
 
 ## Mount USB Drive
 sudo mount /dev/sdb1 /mnt/usb
+sudo mount -t ntfs -o rw,auto,user,fmask=0022,dmask=0000 /dev/whatever /mnt/whatever
 
 ## Unmount USB Drive
 sudo umount /mnt/usb
