@@ -6,6 +6,7 @@
 - <https://www.tutorialspoint.com/elasticsearch/elasticsearch_query_dsl.htm>
 - <https://medium.com/elasticsearch/introduction-to-elasticsearch-queries-b5ea254bf455>
 - <https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html>
+- <https://elasticsearch-cheatsheet.jolicode.com/>
 
 ```javascript
 function exportObj() { return [...document.querySelectorAll("td.discover-table-datafield")].map(x => x.innerText.replace(/\\/g, "")).reverse().join("\n") } exportObj();
