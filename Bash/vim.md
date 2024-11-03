@@ -45,7 +45,8 @@
     - [ ] `<C-V>GyP<C-V>Gr*ZZ`
   - [ ] Redirect Command Line Output To Variable
     - [ ] `:r !python ~/Documents/Helper/rand-int.py`, then save to register a, `"ay` then execute, @a
-    - [ ] Highlight the text `echo "Hello World"`, then `:.!!` to Execute 
+    - [ ] Highlight the text `echo "Hello World"`, then `:.!!` to Execute, this will output on terminal
+    - [ ] Highlight the text, then `:.w !bash`, this will write to a bash shell
   - [ ] Count Characters
     - [ ] `=len("-----")`
   - [ ] To Save Characters on macro that is double decimal
