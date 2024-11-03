@@ -10,6 +10,7 @@
 - <https://vi.stackexchange.com/questions/4307/multiple-cursors-at-desired-location>
 - <https://vi.stackexchange.com/questions/29603/how-to-multi-select-for-the-purpose-of-copy-operation>
 - <https://stackoverflow.com/questions/19883917/execute-current-line-in-bash-from-vim>
+- <https://www.reddit.com/r/vim/comments/6uvu5w/how_are_you_using_autocomplete_and_snippets/>
 
 ## Thoughts
 
@@ -53,3 +54,11 @@
     - [ ] `q15@q` => `@qq@q` (Benefit is that you dont need to count the number of macros!!!)
   - [ ] Run Macro On Selected Lines
     - [ ] '<,'>norm @q
+  - [ ] Snipepts
+
+" ===============================================
+" Skeletons
+" ===============================================
+
+nnoremap ,html :-1read $HOMEPATH/.vim/skeleton/html<CR>3jwf>a
+nnoremap ,php :-1read $HOMEPATH/.vim/skeleton/php<CR>2ja
