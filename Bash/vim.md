@@ -9,6 +9,7 @@
 - <https://stackoverflow.com/questions/1694392/vim-store-output-of-external-command-into-a-register>
 - <https://vi.stackexchange.com/questions/4307/multiple-cursors-at-desired-location>
 - <https://vi.stackexchange.com/questions/29603/how-to-multi-select-for-the-purpose-of-copy-operation>
+- <https://stackoverflow.com/questions/19883917/execute-current-line-in-bash-from-vim>
 
 ## Thoughts
 
@@ -43,7 +44,8 @@
     - [ ] `:%s/./*&`
     - [ ] `<C-V>GyP<C-V>Gr*ZZ`
   - [ ] Redirect Command Line Output To Variable
-    - [ ] `:r !python ~/Documents/Helper/rand-int.py`
+    - [ ] `:r !python ~/Documents/Helper/rand-int.py`, then save to register a, `"ay` then execute, @a
+    - [ ] Highlight the text `echo "Hello World"`, then `:.!!` to Execute 
   - [ ] Count Characters
     - [ ] `=len("-----")`
   - [ ] To Save Characters on macro that is double decimal
