@@ -3,43 +3,51 @@
 
 ## Links
 
-- <https://www.tutorialspoint.com/elasticsearch/elasticsearch_query_dsl.htm>
 - <https://medium.com/elasticsearch/introduction-to-elasticsearch-queries-b5ea254bf455>
 - <https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html>
-- <https://elasticsearch-cheatsheet.jolicode.com/>
 - <https://kwan.com/blog/an-introduction-to-query-dsl-creating-queries-in-elasticsearch/>
+- <https://elasticsearch-cheatsheet.jolicode.com/>
+- <https://medium.com/appscode/deploy-elasticsearch-and-kibana-in-azure-kubernetes-service-using-kubedb-7473b1720dd0>
+
+- `match` is partial
+- `match_phrase` is exact
+- Software AG DSL does not support `match_phrase`
+
+## Export Logs using Javascript
 
 ```javascript
-function exportObj() { return [...document.querySelectorAll("td.discover-table-datafield")].map(x => x.innerText.replace(/\\/g, "")).reverse().join("\n") } exportObj();
-```
+function genKibanaLog() { 
+    const t_arr = [...document.querySelectorAll(`td[data-test-subj="docTableField"]`)]
+        .map(x => x.innerText.replace(/\\/g, ""));
 
-```json
-{
-    "query": {
-        "simple_query_string": {
-            "query": "7636a330-69e7-4723-a063-0d9071a156de",
-            "default_operator": "AND"
-        }
+    const parseDate = (dtStr) => {
+        const [dt, ts] = dtStr.split(", "); 
+        let [month, day, year] = dt.split(" "); 
+        day = day.replace(/th|st|nd|rd/, ""); 
+        const res = new Date(`${year} ${month} ${day} ${ts}`);
+        return res.toISOString();
     }
-}
-```
 
-```json
-{
-    "query": {
-        "simple_query_string": {
-            "query": "Neix",
-            "default_operator": "AND"
-        }
+    let arr = [];
+
+    for (let ind = 1; ind < t_arr.length; ind += 2) {
+        const dt = parseDate(t_arr[ind - 1]);
+        const log = t_arr[ind];
+        arr.push([dt, log]);
     }
+
+    return arr.map(x => x.join(" ")).reverse().join("\n");
 }
+genKibanaLog();
 ```
+
+## Sample Kibana Queries
 
 ```json
 {
     "query": {
         "simple_query_string": {
-            "query": "LeadDelegate:2078",
+            "query": "<query>",
             "default_operator": "AND"
         }
     }
@@ -49,18 +57,48 @@ function exportObj() { return [...document.querySelectorAll("td.discover-table-d
 ```json
 {
   "query": {
-    "match_phrase": {
-      "operationName": "/leads"
+    "query_string": {
+      "query": "remote connection",
+      "default_field": "log"
     }
   }
 }
 ```
 
+```yaml
+start_time: "2024-11-04 10:43:01.641"
+end_time: "2024-11-04 10:43:04.539"
+```
+
 ```json
 {
   "query": {
-    "match_phrase": {
-      "operationName": "/leads/lead-stage-summary"
+    "bool": {
+      "must": [
+        {
+          "match_phrase": {
+            "kubernetes.container_name": "<container_name>"
+          }
+        }
+      ],
+      "should": [
+        {
+          "match": {
+            "log": "<unique-id>"
+          }
+        },
+        {
+          "match": {
+            "log": "SQLServerException"
+          }
+        },
+        {
+          "match": {
+            "log": "ConnectionID:8817"
+          }
+        }
+      ],
+      "minimum_should_match": 1
     }
   }
 }
