@@ -8,6 +8,9 @@
 - <https://kwan.com/blog/an-introduction-to-query-dsl-creating-queries-in-elasticsearch/>
 - <https://elasticsearch-cheatsheet.jolicode.com/>
 - <https://medium.com/appscode/deploy-elasticsearch-and-kibana-in-azure-kubernetes-service-using-kubedb-7473b1720dd0>
+- <https://cloud.tencent.com/developer/article/1803943>
+- <https://www.cnblogs.com/charles101/p/14488609.html>
+- <https://www.elastic.co/guide/en/elasticsearch/reference/current/fix-watermark-errors.html>
 
 - `match` is partial
 - `match_phrase` is exact
