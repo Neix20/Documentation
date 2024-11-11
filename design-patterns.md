@@ -23,15 +23,15 @@
 <table>
 	<tr>
 		<th>Creational Pattern</th>
-		<td>Focus on Class Instantiation or Object Creation</td>
+		<td>How Objects are created<br/>Focus on Class Instantiation or Object Creation</td>
 	</tr>
 	<tr>
 		<th>Structural Pattern</th>
-		<td>Focus on How to Store Data</td>
+		<td>How objects related to each other<br/>Focus on How to Store Data</td>
 	</tr>
 	<tr>
 		<th>Behavioral Pattern</th>
-		<td>Focus on Communication between of Objects, Sharing Data</td>
+		<td>How Objects communicate with each other<br/>Focus on Communication between of Objects, Sharing Data</td>
 	</tr>
 </table>
 
@@ -76,6 +76,11 @@
 	<tr>
 		<th>Adapter</th>
 		<th>Structural</th>
+		<td></td>
+	</tr>
+	<tr>
+		<th>Adapter</th>
+		<th>Facade</th>
 		<td></td>
 	</tr>
 </table>
