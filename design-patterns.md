@@ -7,14 +7,25 @@
   - [x] MVC
   - [ ] Atomic File Structure
 - [ ] Software Patterns
-  - [ ] Singleton
-  - [ ] Factory
-  - [ ] Dependency Injection
+  - [x] Singleton
+  - [x] Factory
+  - [x] Dependency Injection
   - [ ] Observer
   - [ ] Strategy
   - [ ] Decorator
   - [ ] Iterator
   - [ ] Adapter
+
+## Notes
+
+- Use `Factory` pattern with `Dependency Injection` pattern
+  - Use this when reading from Different Sources of Data
+- Use `Singleton` for Global State
+- Use `Observer` for Push Notification, Web Socket
+- Use `Iterator` for Faster Looping
+- Use `Adapter` for Different Output
+- Use `Strategy` for Executing Different Algorithms
+- Use `Decorator` to add additional code without modifying original code 
 
 ## Definition
 
@@ -27,7 +38,7 @@
 	</tr>
 	<tr>
 		<th>Structural Pattern</th>
-		<td>How objects related to each other<br/>Focus on How to Store Data</td>
+		<td>How objects related to each other<br/>Focus on How to Handle Data</td>
 	</tr>
 	<tr>
 		<th>Behavioral Pattern</th>
@@ -38,99 +49,50 @@
 ### Definition for Design Patterns
 
 <table>
-  <tr>
+	<tr>
 		<th>Singleton</th>
 		<th>Creational</th>
-		<td></td>
+		<td>Ensures a class has only one instance and provides a global point of access to that instance.</td>
 	</tr>
 	<tr>
 		<th>Factory</th>
 		<th>Creational</th>
-		<td></td>
+		<td>Provides an interface for creating objects in a superclass but allows subclasses to alter the type of
+			created object.</td>
 	</tr>
 	<tr>
 		<th>Dependency Injection</th>
 		<th>Behavioral</th>
-		<td>Pass Code as Object by Parameters, ie. Inject / Pass Object / Code into another Object / Code </td>
+		<td>Passes dependencies (like objects or functions) as parameters, allowing decoupling and flexibility.</td>
 	</tr>
 	<tr>
 		<th>Observer</th>
 		<th>Behavioral</th>
-		<td></td>
+		<td>Defines a one-to-many dependency, where changes in one object notify and update all dependents.</td>
 	</tr>
 	<tr>
 		<th>Strategy</th>
 		<th>Behavioral</th>
-		<td></td>
+		<td>Enables selecting an algorithm's behavior at runtime by encapsulating it within different classes.</td>
 	</tr>
 	<tr>
 		<th>Decorator</th>
 		<th>Structural</th>
-		<td></td>
+		<td>Adds new functionality to an object dynamically by wrapping it in an object of a decorator class.</td>
 	</tr>
 	<tr>
 		<th>Iterator</th>
 		<th>Behavioral</th>
-		<td></td>
+		<td>Provides a way to access elements of a collection without exposing its underlying representation.</td>
 	</tr>
 	<tr>
 		<th>Adapter</th>
 		<th>Structural</th>
-		<td></td>
+		<td>Allows incompatible interfaces to work together by converting the interface of a class into another.</td>
 	</tr>
 	<tr>
-		<th>Adapter</th>
 		<th>Facade</th>
-		<td></td>
+		<th>Structural</th>
+		<td>Simplifies complex systems by providing a unified interface that represents a simplified API.</td>
 	</tr>
 </table>
-
-## Sample Codes
-
-### Singleton
-
-```python
-
-```
-
-### Factory
-
-```python
-
-```
-
-### Dependency Injection
-
-```python
-
-```
-
-### Observer
-
-```python
-
-```
-
-### Strategy
-
-```python
-
-```
-
-### Decorator
-
-```python
-
-```
-
-### Iterator
-
-```python
-
-```
-
-### Adapter
-
-```python
-
-```
