@@ -6,6 +6,8 @@
 - <https://www.youtube.com/watch?v=J1f5b4vcxCQ>
 - <https://www.youtube.com/watch?v=XVZpi7VJ_ws>
 - <https://medium.com/@lucas.rafael.araujo/c-understanding-interfaces-simple-mocking-testing-xunit-nsubstitute-bce359ba0b74>
+- <https://medium.com/@ayushnandanwar003/unit-testing-in-node-js-using-jest-a-comprehensive-guide-09717f4438dd>
+- <https://mahmoud-kassem.medium.com/unit-testing-with-jest-for-mongodb-and-node-js-a-typescript-approach-2024-17a079e08163>
 
 ## Task
 
@@ -21,6 +23,23 @@
   - [ ] Decorator
   - [ ] Iterator
   - [ ] Observer
+
+- [ ] Learn to use Software Design Pattern
+- [ ] Factory Pattern
+  - [ ] Design a Factory that returns the proper `type of preview` based on `Mime Type`
+- [ ] Design a System that writes to 2 File System
+  - [ ] File I/O
+  - [ ] Database
+- [ ] Learn to Write Unit Test
+  - [ ] Use Reference from Exercism
+  - [ ] Learn to Write Database Integration Test
+    - [ ] Using the MVC Pattern, We should change our model into an interface?, so that we can test our model functionality
+      - [ ] Using Model-Repository-Server/Controller-View
+- [x] Learn Design Patterns
+  - [x] Learn Dependency Injection
+  - [ ] Learn Factory Method
+  - [x] Learn Strategy Pattern
+  - [ ] Learn Singleton Pattern
 
 ## Notes
 
