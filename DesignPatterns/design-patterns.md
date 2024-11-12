@@ -33,6 +33,16 @@
 - Use `Strategy` for Executing Different Algorithms
 - Use `Decorator` to add additional code without modifying original code
 
+From what I understand of the Youtube Video, everything is involved with Dependency Injection
+
+We could use Factory Method to assist with some parts like initialization
+
+For Javascript, there is no need for interface since every object is the same (IDK how to explain, but since there's no type checking, you just need to make sure there is the same function)
+
+strategy pattern is used when we want to change the behavior of the method, but for the same class
+
+Factory Pattern is used when we have same behavior of method, but different objects (think File I/0, Database)
+
 ## Definition
 
 ### Definition for Gang-Of-Four (GOF)
