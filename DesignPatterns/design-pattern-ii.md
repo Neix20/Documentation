@@ -12,6 +12,8 @@ Ask yourself questions like this
 - "How can I test a method?"
 - "I need to set Internal Variable to Test."
 
+This is hint you need to use Dependency Injection
+
 Concepts of OOP
 
 Abstraction => Hiding Internal details and Functionaliesi (Allow Inversion of Control) (Callback) (implements)
