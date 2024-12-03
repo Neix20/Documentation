@@ -12,19 +12,43 @@ Ask yourself questions like this
 - "How can I test a method?"
 - "I need to set Internal Variable to Test."
 
-This is hint you need to use Dependency Injection
+## Concepts of OOP
 
-Concepts of OOP
+<table>
+  <tr>
+    <th>Term</th>
+    <th>Definition</th>
+  </tr>
+  <tr>
+    <td>Abstraction</td>
+    <td>Hiding Internal details and Functionaliesi (Allow Inversion of Control) (Callback) (implements)</td>
+  </tr>
+  <tr>
+    <td>Encapsulation</td>
+    <td>Private and Public Field (Getter and Setter)</td>
+  </tr>
+  <tr>
+    <td>Polymorphism</td>
+    <td>Overriding and overloading of Function (Change the behavior of function)</td>
+  </tr>
+  <tr>
+    <td>Inheritance</td>
+    <td>Reuse Functionalies of Existing Classes (Extends)</td>
+  </tr>
+</table>
 
-Abstraction => Hiding Internal details and Functionaliesi (Allow Inversion of Control) (Callback) (implements)
-Encapsulation => Private and Public Field (Getter and Setter)
-Polymorphism => Overriding and overloading of Function (Change the behavior of function)
-Inheritance => Reuse Functionalies of Existing Classes (Extends)
+## Use-Case
 
-Use-Case
+Do this using typescript. or Java.
 
-Design an Email Service Program using best practices
+Design an Email Service Program using best practices:
 
-It will read data from API or Database
-It will then generate a csv file, and pdf file, based on different company.
-Then, it will attach the file, and send to its respective company.
+There are two people asking for your services. 1 has provided you with an API, and has asked you to generate a CSV File
+
+Another is your company internal person, giving you a database connection and generate a xlsx file.
+
+To do testing, you provided yourself a json file, to convert into csv
+
+- It will read data from API or Database
+- It will then generate a csv file, and xlsx file, based on different company.
+- Then, it will attach the file, and send to its respective company.
