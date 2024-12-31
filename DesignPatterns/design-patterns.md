@@ -6,6 +6,7 @@
 - <https://www.youtube.com/watch?v=J1f5b4vcxCQ>
 - <https://www.youtube.com/watch?v=XVZpi7VJ_ws>
 - <https://medium.com/@lucas.rafael.araujo/c-understanding-interfaces-simple-mocking-testing-xunit-nsubstitute-bce359ba0b74>
+- <https://medium.com/@nile.bits/javascript-factory-design-pattern-a-comprehensive-guide-9266b726ee5c>
 
 ## Task
 
