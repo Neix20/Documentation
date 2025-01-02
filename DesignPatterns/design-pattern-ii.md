@@ -1,6 +1,11 @@
 
 # Design Patterns
 
+## Links
+
+- <https://www.crunchydata.com/blog/tags-aand-postgres-arrays-a-purrfect-combination>
+- <https://www.reddit.com/r/aws/comments/9r8sn9/dynamodb_best_practices_for_designing_an_image/>
+
 Dependency Injection for Factory, Allows to `Register` Function
 
 Dependency Injection allows for `Testing`
@@ -52,3 +57,5 @@ To do testing, you provided yourself a json file, to convert into csv
 - It will read data from API or Database
 - It will then generate a csv file, and xlsx file, based on different company.
 - Then, it will attach the file, and send to its respective company.
+
+Design a File Uploader Tagging System
