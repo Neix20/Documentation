@@ -224,6 +224,10 @@ flowchart TD
   end
 ```
 
+```script
+kubectl get pods -o go-template --template='{{range .items}}{{if eq .status.phase "Running"}}{{.spec.nodeName}}{{"\n"}}{{end}}{{end}}' --all-namespaces | awk '{nodes[$1]++ } END{ for (n in nodes) print n": "nodes[n]}'
+```
+
 ## References
 
 - [Kubernetes CheatSheet](https://www.bluematador.com/learn/kubectl-cheatsheet)
@@ -231,3 +235,4 @@ flowchart TD
 - [Kubernetes Expose Localhost with Ingress Controller II](https://platform9.com/learn/v1.0/tutorials/nginix-controller-via-yaml)
 - [Kubernetes Expose Localhost with Ingress Controller](oursera.org/courseraplus?utm_source=gg&utm_medium=sem&utm_campaign=b2c_apac_coursera-plus_coursera_ftcof_subscription_arte_apr-24_dr_geo-set-3-multi_sem_rsa_gads_lg-all&utm_content=b2c&campaignid=21165289867&adgroupid=163685947107&device=c&keyword=coursera&matchtype=e&network=g&devicemodel=&adpostion=&creativeid=696974723648&hide_mobile_promo&gad_source=1&gclid=EAIaIQobChMIkbCasfLjhgMVbBGDAx0VCgB_EAAYASAAEgJBVfD_BwE)
 - [Kubernetes Do Localhost Nginx in BareMetal](https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/baremetal/deploy.yaml)
+- [Uneven Pod Distribution](https://github.com/kubernetes/kubernetes/issues/105220)
