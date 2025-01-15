@@ -1,0 +1,20 @@
+"PK","SK","Entity Type"
+"USER-001","USER-001","USER"
+"USER-002","USER-002","USER"
+"USER-001","USER-ATTR-001","USER_ATTR", // Put User and User Attribute // Value Should Be Unique Key
+"USER-001","USER-ATTR-002","USER_ATTR", // Put User and User Attribute // Value Should Be Unique Key
+"USER-002","USER-ATTR-001","USER_ATTR", // Put User and User Attribute // Value Should Be Unique Key
+"USER-002","USER-ATTR-003","USER_ATTR", // Put User and User Attribute // Value Should Be Unique Key
+"NEWS-001","NEWS-001","NEWS",
+"NEWS-001","USER-001","NEWS-USER" // Put News and User Information
+"NEWS-001","USER-002","NEWS-USER"
+"NEWS-001","IP-SERIES-001","NEWS-IP-SERIES" // Put News and IP Series Information
+"NEWS-001","IP-SERIES-002","NEWS-IP-SERIES"
+"IP-SERIES-001","IP-SERIES-001","IP-SERIES"
+"IP-SERIES-002","IP-SERIES-002","IP-SERIES"
+"PLATFORM-001","PLATFORM-001","CATEGORIES"
+"PLATFORM-002","PLATFORM-002","CATEGORIES"
+"STATUS-001","STATUS-001","CATEGORIES"
+"STATUS-002","STATUS-002","CATEGORIES"
+"STATUS-003","STATUS-003","CATEGORIES"
+
