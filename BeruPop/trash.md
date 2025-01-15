@@ -34,3 +34,5 @@ Let's Assume a User can have multiple Jobs, and a Jobs can Have Multiple Users
 
 I would like to list out all user whom have the following job Role, Software Engineer and Teacher. This query should return all User Id
 I want to get the Details of The User. How would I do this? Is my approach correct?
+
+Use Query, then BatchGet
