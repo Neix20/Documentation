@@ -61,6 +61,11 @@
 # Change Explorer
 :cd %:p:h
 
+# Native Vim Search-And-Replace
+
+`:vimgrep /BUILD-SNAPSHOT/ <folder-name>/**/*.txt`
+`:cfdo %s/BUILD-SNAPSHOT/RELEASE/g | update`
+
 # Snippets
 
 " =============================================== \
