@@ -63,5 +63,5 @@
 " Skeletons
 " ===============================================
 
-nnoremap ,html :-1read $HOMEPATH/.vim/skeleton/html<CR>3jwf>a
-nnoremap ,php :-1read $HOMEPATH/.vim/skeleton/php<CR>2ja
+`nnoremap ,html :-1read $HOMEPATH/.vim/skeleton/html<CR>3jwf>a`
+`nnoremap ,php :-1read $HOMEPATH/.vim/skeleton/php<CR>2ja`
