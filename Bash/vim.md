@@ -59,9 +59,11 @@
 # Change Explorer
 :cd %:p:h
 
-" ===============================================
-" Skeletons
-" ===============================================
+# Snippets
 
-`nnoremap ,html :-1read $HOMEPATH/.vim/skeleton/html<CR>3jwf>a`
+" =============================================== \
+" Skeletons \
+" =============================================== \
+
+`nnoremap ,html :-1read $HOMEPATH/.vim/skeleton/html<CR>3jwf>a` \
 `nnoremap ,php :-1read $HOMEPATH/.vim/skeleton/php<CR>2ja`
