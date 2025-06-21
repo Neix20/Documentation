@@ -11,6 +11,8 @@
 - <https://vi.stackexchange.com/questions/29603/how-to-multi-select-for-the-purpose-of-copy-operation>
 - <https://stackoverflow.com/questions/19883917/execute-current-line-in-bash-from-vim>
 - <https://www.reddit.com/r/vim/comments/6uvu5w/how_are_you_using_autocomplete_and_snippets/>
+- <https://thevaluable.dev/vim-advanced/>
+- <https://lazyvim-ambitious-devs.phillips.codes/course/chapter-1/>
 
 ## Thoughts
 
