@@ -59,12 +59,18 @@
   - [ ] Snipepts
 
 # Change Explorer
-:cd %:p:h
+
+`:cd %:p:h`
+
+# Send Text to Terminal
+
+`:'<,'>ToggleTermVisualSelection`
 
 # Native Vim Search-And-Replace
 
 `:vimgrep /BUILD-SNAPSHOT/ <folder-name>/**/*.txt`
 `:cfdo %s/BUILD-SNAPSHOT/RELEASE/g | update`
+
 
 # Snippets
 
