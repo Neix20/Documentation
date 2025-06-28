@@ -71,6 +71,10 @@
 `:vimgrep /BUILD-SNAPSHOT/ <folder-name>/**/*.txt`
 `:cfdo %s/BUILD-SNAPSHOT/RELEASE/g | update`
 
+# Math Expression
+
+`:'<,'>!tr -d _ | calc -p`
+
 
 # Snippets
 
