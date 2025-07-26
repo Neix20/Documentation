@@ -57,6 +57,10 @@
   - [ ] Run Macro On Selected Lines
     - [ ] '<,'>norm @q
   - [ ] Snipepts
+     
+# Redirect Terminal Output to Buffer
+
+read !echo "Hello World"
 
 # Change Explorer
 
