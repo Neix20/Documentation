@@ -62,6 +62,14 @@
 
 read !echo "Hello World"
 
+Highlight text, then run `:<range>!bash`
+
+# How to debug LazyVim
+
+`:Trouble`
+
+`:messages`
+
 # Change Explorer
 
 `:cd %:p:h`
