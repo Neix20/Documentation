@@ -1,0 +1,15 @@
+
+FROM acrts01easnshared02.azurecr.io/tssdevops/base/openjdk-jre:17
+
+WORKDIR /app
+
+COPY --chown=appuser:appuser run.sh ./
+COPY --chown=appuser:appuser ./ai-web/target/office-ai-server.jar app.jar
+RUN chown -R appuser:appuser /app
+RUN chmod 775 /app
+
+USER appuser
+EXPOSE 8080
+
+ENTRYPOINT ["/bin/sh", "/app/run.sh"]
+
