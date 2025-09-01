@@ -563,6 +563,9 @@ openssl rsa -in privateKey.pem -out newPrivateKey.pem
 # Generate a private Key
 openssl genrsa -aes256 -out <domain>/<program/project>/<site_name>/<site_name>.<domain>.key 2048
 
+# OpenSSL Read CSR
+openssl x509 -noout -text -in <domain>.csr
+
 # Generate a CSR
 
 export subject_alt_name=DNS:<site_name>.<domain>,DNS:<site-sub/internaldns>
