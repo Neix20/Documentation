@@ -1,0 +1,175 @@
+<!--
+        IMPORTANT:
+        - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.
+        - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.
+        - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.
+        - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.
+        - To remove a policy, delete the corresponding policy statement from the policy document.
+        - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.
+        - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.
+        - Policies are applied in the order of their appearance, from the top down.
+        - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.
+    -->
+<policies>
+    <inbound>
+        <!--+++++++++++++++++++++++++++++++++-->
+        <!-- Start : Set CORS - TemplateRest -->
+        <cors>
+            <allowed-origins>
+                <origin>*</origin>
+            </allowed-origins>
+            <allowed-methods preflight-result-max-age="1000">
+                <method>*</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+            <expose-headers>
+                <header>*</header>
+            </expose-headers>
+        </cors>
+        <!-- End : Set CORS - TemplateRest -->
+        <!--+++++++++++++++++++++++++++++++-->
+        <!--+++++++++++++++++++++++++++++++++++-->
+        <rate-limit calls="{{rateLimit-per-category}}" renewal-period="60" remaining-calls-variable-name="remainingCallsPerSubscription" />
+        <!--+++++++++++++++++++++++++++++++-->
+        <!-- Start : validate token header -->
+        <choose>
+            <when condition="@(
+                    ((string)context.Operation.UrlTemplate).Equals("/dls-init/th/bbl")
+                    || ((string)context.Operation.UrlTemplate).Equals("/applications/sign-documents/bbl")
+                )">
+                <choose>
+                    <when condition="@(!context.Request.Headers.ContainsKey("Apim-Auth-Secure-Token"))">
+                        <return-response>
+                            <set-status code="401" reason="Unauthorized" />
+                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token")).ToString())</set-body>
+                        </return-response>
+                    </when>
+                </choose>
+            </when>
+            <when condition="@(
+                    ((string)context.Operation.UrlTemplate).Equals("/applications/submit")
+                )">
+                <choose>
+                    <when condition="@(!context.Request.Headers.ContainsKey("Apim-Auth-Secure-Token") && !context.Request.Headers.ContainsKey("Authorization"))">
+                        <return-response>
+                            <set-status code="401" reason="Unauthorized" />
+                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token")).ToString())</set-body>
+                        </return-response>
+                    </when>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when condition="@(!context.Request.Headers.ContainsKey("Authorization"))">
+                        <return-response>
+                            <set-status code="401" reason="Unauthorized" />
+                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token")).ToString())</set-body>
+                        </return-response>
+                    </when>
+                </choose>
+            </otherwise>
+        </choose>
+        <!-- End : validate token header -->
+        <!--+++++++++++++++++++++++++++++-->
+        <!--+++++++++++++++++++++-->
+        <!-- Start : check token -->
+        <choose>
+            <when condition="@(context.Request.Headers.ContainsKey("Apim-Auth-Secure-Token"))">
+                <cache-lookup-value key="@{
+                        String accessToken = (String)context.Request.Headers.GetValueOrDefault("Apim-Auth-Secure-Token", "");
+                        String subscription = (String)context.Request.Headers.GetValueOrDefault("Ocp-Apim-Subscription-Key", "");
+                        String cacheKey = "api[TokenManager]__subscription["+subscription+"]__accessToken["+accessToken+"]";
+                        return cacheKey;
+                    }" variable-name="appId" caching-type="internal" />
+                <choose>
+                    <when condition="@{
+                        try{
+                            if(!context.Variables.ContainsKey("appId")){
+                                return true;
+                            }
+ 
+                            JArray appIdList = (JArray) context.Variables["appId"];
+                            for(int i=0; i<appIdList.Count; i++){                          
+                                if( "df9d3a48-6da8-afd7-581f-aed681a87389".Equals((String)appIdList[i]) ){
+                                    return false;
+                                }
+                            }
+                           
+                            return true;
+                        } catch(Exception err){
+                            return true;
+                        }
+                    }">
+                        <return-response>
+                            <set-status code="401" reason="Unauthorized" />
+                            <set-header name="Content-Type" exists-action="override">
+                                <value>application/json</value>
+                            </set-header>
+                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Invalid token")).ToString())</set-body>
+                        </return-response>
+                    </when>
+                </choose>
+            </when>
+        </choose>
+        <choose>
+            <when condition="@(context.Request.Headers.ContainsKey("Authorization"))">
+                <validate-jwt header-name="Authorization" failed-validation-httpcode="401" require-expiration-time="false" require-scheme="Bearer">
+                    <issuer-signing-keys>
+                        <key certificate-id="jwt-firestorm--certificate" />
+                    </issuer-signing-keys>
+                </validate-jwt>
+            </when>
+        </choose>
+        <!-- End : check token -->
+        <!--+++++++++++++++++++-->
+        <base />
+        <set-backend-service backend-id="firestorm--Backend" />
+        <rewrite-uri template="@($"/firestorm{(string)context.Operation.UrlTemplate}")" />
+    </inbound>
+    <backend>
+        <!--++++++++++++++++++++++++++++++++++++-->
+        <!-- Start : Set timeout - TemplateRest -->
+        <forward-request timeout="{{default-timeout-medium}}" />
+        <!-- End : Set timeout - TemplateRest -->
+        <!--++++++++++++++++++++++++++++++++++-->
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+        <!--++++++++++++++++++++++++++++++++++++++++++-->
+        <!-- Start : Set error respose - TemplateRest -->
+        <return-response>
+            <set-status code="@(context.Response.StatusCode)" reason="@(context.LastError.Reason)" />
+            <set-header name="Access-Control-Allow-Credentials" exists-action="override">
+                <value>true</value>
+            </set-header>
+            <set-header name="Access-Control-Allow-Headers" exists-action="override">
+                <value>*</value>
+            </set-header>
+            <set-header name="Access-Control-Allow-Origin" exists-action="override">
+                <value>*</value>
+            </set-header>
+            <set-header name="Content-Type" exists-action="override">
+                <value>application/json</value>
+            </set-header>
+            <set-body>@{
+                        JObject body = new JObject();
+                        body.Add(new JProperty("status", "E"));
+                        body.Add(new JProperty("message", (String) context.LastError.Message));
+                        body.Add(new JProperty("errorSource", (String) context.LastError.Source));
+                        body.Add(new JProperty("errorReason", (String) context.LastError.Reason));
+                        body.Add(new JProperty("errorMessage", (String) context.LastError.Message));
+                        body.Add(new JProperty("errorScope", (String) context.LastError.Scope));
+                        body.Add(new JProperty("errorPath", (String) context.LastError.Path));
+                        body.Add(new JProperty("errorPolicyId", (String) context.LastError.PolicyId));
+                        return body.ToString();
+                    }</set-body>
+        </return-response>
+        <!-- End : Set error respose - TemplateRest -->
+        <!--++++++++++++++++++++++++++++++++++++++++-->
+    </on-error>
+</policies>
