@@ -468,16 +468,12 @@
                 <value>application/json</value>
             </set-header>
             <set-body>@{
-              JObject body = new JObject();
-              body.Add(new JProperty("status", "E"));
-              body.Add(new JProperty("message", (String) context.LastError.Message));
-              body.Add(new JProperty("errorSource", (String) context.LastError.Source));
-              body.Add(new JProperty("errorReason", (String) context.LastError.Reason));
-              body.Add(new JProperty("errorMessage", (String) context.LastError.Message));
-              body.Add(new JProperty("errorScope", (String) context.LastError.Scope));
-              body.Add(new JProperty("errorPath", (String) context.LastError.Path));
-              body.Add(new JProperty("errorPolicyId", (String) context.LastError.PolicyId));
-              return body.ToString();
+                JObject body = new JObject();
+                body.Add(new JProperty("reasonCode", "ERR_GW_" + context.Response.StatusCode));
+                body.Add(new JProperty("reason", (String) context.LastError.Reason));
+                body.Add(new JProperty("message", (String) context.LastError.Message));
+                body.Add(new JProperty("sourceSystem", "Gateway"));
+                return body.ToString();
             }</set-body>
         </return-response>
         <!-- End : Set error respose - TemplateRest -->

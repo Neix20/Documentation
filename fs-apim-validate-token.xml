@@ -37,6 +37,7 @@
         <rate-limit calls="{{rateLimit-per-category}}" renewal-period="60" remaining-calls-variable-name="remainingCallsPerSubscription" />
         <!--+++++++++++++++++++++++++++++++-->
         <!-- Start : validate token header -->
+        <set-variable name="appId-all" value="{{appId-all}}" />
         <choose>
             <when condition="@(!context.Request.Headers.ContainsKey("Authorization"))">
                 <return-response>
@@ -44,7 +45,15 @@
                     <set-header name="Content-Type" exists-action="override">
                         <value>application/json</value>
                     </set-header>
-                    <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token. Believe In Rave")).ToString())</set-body>
+                    <set-body>@{
+                        JObject resBody = new JObject(
+                            new JProperty("reasonCode", "ERR_GW_401"),
+                            new JProperty("reason", "Unauthorized"),
+                            new JProperty("message", "Authorization error"),
+                            new JProperty("sourceSystem", "Gateway")
+                        );
+                        return resBody.ToString();
+                    }</set-body>
                 </return-response>
             </when>
         </choose>
@@ -58,14 +67,42 @@
                     }" variable-name="appId" caching-type="internal" />
                 <choose>
                     <when condition="@{
+                        String auth = context.Request.Headers.GetValueOrDefault("Authorization", "");
+                        if (auth.StartsWith("Bearer ")) {
+                            String token = auth.Substring("Bearer ".Length);
+                            // Check if it looks like a JWT (has 2 dots and starts with "ey")
+                            return token.Split('.').Length == 3 && token.StartsWith("ey");
+                        }
+                        return false;
+                    }">
+                        <validate-jwt header-name="Authorization"
+                            failed-validation-httpcode="401"
+                            require-expiration-time="false"
+                            require-scheme="Bearer">
+                            <openid-config url="https://login.microsoftonline.com/8b6909d5-3e9a-4e05-a3f0-2cb7537cf4be/v2.0/.well-known/openid-configuration" />
+                            <issuers>
+                                <issuer>https://sts.windows.net/8b6909d5-3e9a-4e05-a3f0-2cb7537cf4be/</issuer>
+                            </issuers>
+                        </validate-jwt>
+                    </when>
+                    <when condition="@{
                         try{
                             if(!context.Variables.ContainsKey("appId")){
                                 return true;
                             }
+
+                            String appIdAll = (String) context.Variables["appId-all"];
+                            JArray permissionAppId = JArray.Parse(appIdAll);
+
+                            if (permissionAppId.Count == 0) {
+                                return true;
+                            }
+
+                            String appIdMain = (String) permissionAppId[0];
  
                             JArray appIdList = (JArray) context.Variables["appId"];
                             for(int i=0; i<appIdList.Count; i++){                          
-                                if( "eaa65c53-68e3-4c6b-a99f-18c67124901c".Equals((String)appIdList[i]) ){
+                                if( appIdMain.Equals((String) appIdList[i]) ) {
                                     return false;
                                 }
                             }
@@ -80,7 +117,15 @@
                             <set-header name="Content-Type" exists-action="override">
                                 <value>application/json</value>
                             </set-header>
-                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message",context.Variables["appId"])).ToString())</set-body>
+                            <set-body>@{
+                                JObject resBody = new JObject(
+                                    new JProperty("reasonCode", "ERR_GW_401"),
+                                    new JProperty("reason", "Unauthorized"),
+                                    new JProperty("message", "Authorization error"),
+                                    new JProperty("sourceSystem", "Gateway")
+                                );
+                                return resBody.ToString();
+                            }</set-body>
                         </return-response>
                     </when>
                 </choose>
@@ -136,14 +181,10 @@
             </set-header>
             <set-body>@{
                 JObject body = new JObject();
-                body.Add(new JProperty("status", "E"));
+                body.Add(new JProperty("reasonCode", "ERR_GW_" + context.Response.StatusCode));
+                body.Add(new JProperty("reason", (String) context.LastError.Reason));
                 body.Add(new JProperty("message", (String) context.LastError.Message));
-                body.Add(new JProperty("errorSource", (String) context.LastError.Source));
-                body.Add(new JProperty("errorReason", (String) context.LastError.Reason));
-                body.Add(new JProperty("errorMessage", (String) context.LastError.Message));
-                body.Add(new JProperty("errorScope", (String) context.LastError.Scope));
-                body.Add(new JProperty("errorPath", (String) context.LastError.Path));
-                body.Add(new JProperty("errorPolicyId", (String) context.LastError.PolicyId));
+                body.Add(new JProperty("sourceSystem", "Gateway"));
                 return body.ToString();
             }</set-body>
         </return-response>
