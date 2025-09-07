@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY --chown=appuser:appuser run.sh ./
 COPY --chown=appuser:appuser ./ai-web/target/office-ai-server.jar app.jar
+
 RUN chown -R appuser:appuser /app
 RUN chmod 775 /app
 

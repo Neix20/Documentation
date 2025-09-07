@@ -12,6 +12,9 @@
     -->
 <policies>
     <inbound>
+        <set-header name="RequestId" exists-action="override">
+            <value>@(context.Request.Headers.GetValueOrDefault("x-aia-request-id",""))</value>
+        </set-header>
         <!--+++++++++++++++++++++++++++++++++-->
         <!-- Start : Set CORS - TemplateRest -->
         <cors>
@@ -35,51 +38,21 @@
         <!--+++++++++++++++++++++++++++++++-->
         <!-- Start : validate token header -->
         <choose>
-            <when condition="@(
-                    ((string)context.Operation.UrlTemplate).Equals("/dls-init/th/bbl")
-                    || ((string)context.Operation.UrlTemplate).Equals("/applications/sign-documents/bbl")
-                )">
-                <choose>
-                    <when condition="@(!context.Request.Headers.ContainsKey("Apim-Auth-Secure-Token"))">
-                        <return-response>
-                            <set-status code="401" reason="Unauthorized" />
-                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token")).ToString())</set-body>
-                        </return-response>
-                    </when>
-                </choose>
+            <when condition="@(!context.Request.Headers.ContainsKey("Authorization"))">
+                <return-response>
+                    <set-status code="401" reason="Unauthorized" />
+                    <set-header name="Content-Type" exists-action="override">
+                        <value>application/json</value>
+                    </set-header>
+                    <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token. Believe In Rave")).ToString())</set-body>
+                </return-response>
             </when>
-            <when condition="@(
-                    ((string)context.Operation.UrlTemplate).Equals("/applications/submit")
-                )">
-                <choose>
-                    <when condition="@(!context.Request.Headers.ContainsKey("Apim-Auth-Secure-Token") && !context.Request.Headers.ContainsKey("Authorization"))">
-                        <return-response>
-                            <set-status code="401" reason="Unauthorized" />
-                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token")).ToString())</set-body>
-                        </return-response>
-                    </when>
-                </choose>
-            </when>
-            <otherwise>
-                <choose>
-                    <when condition="@(!context.Request.Headers.ContainsKey("Authorization"))">
-                        <return-response>
-                            <set-status code="401" reason="Unauthorized" />
-                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Please input token")).ToString())</set-body>
-                        </return-response>
-                    </when>
-                </choose>
-            </otherwise>
         </choose>
-        <!-- End : validate token header -->
-        <!--+++++++++++++++++++++++++++++-->
-        <!--+++++++++++++++++++++-->
-        <!-- Start : check token -->
         <choose>
-            <when condition="@(context.Request.Headers.ContainsKey("Apim-Auth-Secure-Token"))">
+            <when condition="@(context.Request.Headers.ContainsKey("Authorization"))">
                 <cache-lookup-value key="@{
-                        String accessToken = (String)context.Request.Headers.GetValueOrDefault("Apim-Auth-Secure-Token", "");
-                        String subscription = (String)context.Request.Headers.GetValueOrDefault("Ocp-Apim-Subscription-Key", "");
+                        String accessToken = (String)context.Request.Headers.GetValueOrDefault("Authorization", "");
+                        String subscription = (String)context.Request.Headers.GetValueOrDefault("x-aia-apikey", "");
                         String cacheKey = "api[TokenManager]__subscription["+subscription+"]__accessToken["+accessToken+"]";
                         return cacheKey;
                     }" variable-name="appId" caching-type="internal" />
@@ -92,7 +65,7 @@
  
                             JArray appIdList = (JArray) context.Variables["appId"];
                             for(int i=0; i<appIdList.Count; i++){                          
-                                if( "df9d3a48-6da8-afd7-581f-aed681a87389".Equals((String)appIdList[i]) ){
+                                if( "eaa65c53-68e3-4c6b-a99f-18c67124901c".Equals((String)appIdList[i]) ){
                                     return false;
                                 }
                             }
@@ -107,26 +80,31 @@
                             <set-header name="Content-Type" exists-action="override">
                                 <value>application/json</value>
                             </set-header>
-                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message","Invalid token")).ToString())</set-body>
+                            <set-body>@(new JObject(new JProperty("statusCode","401"), new JProperty("message",context.Variables["appId"])).ToString())</set-body>
                         </return-response>
                     </when>
                 </choose>
             </when>
         </choose>
-        <choose>
+        <!-- End : validate token header -->
+        <!--+++++++++++++++++++++++++++++-->
+        <!--+++++++++++++++++++++-->
+        <!-- Start : check token -->
+        <!-- <choose>
             <when condition="@(context.Request.Headers.ContainsKey("Authorization"))">
                 <validate-jwt header-name="Authorization" failed-validation-httpcode="401" require-expiration-time="false" require-scheme="Bearer">
-                    <issuer-signing-keys>
-                        <key certificate-id="jwt-firestorm--certificate" />
-                    </issuer-signing-keys>
+                    <openid-config url="https://login.microsoftonline.com/8b6909d5-3e9a-4e05-a3f0-2cb7537cf4be/v2.0/.well-known/openid-configuration" />
+                    <issuers>
+                        <issuer>https://sts.windows.net/8b6909d5-3e9a-4e05-a3f0-2cb7537cf4be/</issuer>
+                    </issuers>
                 </validate-jwt>
             </when>
-        </choose>
+        </choose> -->
         <!-- End : check token -->
         <!--+++++++++++++++++++-->
         <base />
-        <set-backend-service backend-id="firestorm--Backend" />
-        <rewrite-uri template="@($"/firestorm{(string)context.Operation.UrlTemplate}")" />
+        <!-- <set-backend-service backend-id="firestorm-Backend" /> -->
+        <!-- <rewrite-uri template="@($"/firestorm{(string)context.Operation.UrlTemplate}")" /> --> 
     </inbound>
     <backend>
         <!--++++++++++++++++++++++++++++++++++++-->
@@ -157,17 +135,17 @@
                 <value>application/json</value>
             </set-header>
             <set-body>@{
-                        JObject body = new JObject();
-                        body.Add(new JProperty("status", "E"));
-                        body.Add(new JProperty("message", (String) context.LastError.Message));
-                        body.Add(new JProperty("errorSource", (String) context.LastError.Source));
-                        body.Add(new JProperty("errorReason", (String) context.LastError.Reason));
-                        body.Add(new JProperty("errorMessage", (String) context.LastError.Message));
-                        body.Add(new JProperty("errorScope", (String) context.LastError.Scope));
-                        body.Add(new JProperty("errorPath", (String) context.LastError.Path));
-                        body.Add(new JProperty("errorPolicyId", (String) context.LastError.PolicyId));
-                        return body.ToString();
-                    }</set-body>
+                JObject body = new JObject();
+                body.Add(new JProperty("status", "E"));
+                body.Add(new JProperty("message", (String) context.LastError.Message));
+                body.Add(new JProperty("errorSource", (String) context.LastError.Source));
+                body.Add(new JProperty("errorReason", (String) context.LastError.Reason));
+                body.Add(new JProperty("errorMessage", (String) context.LastError.Message));
+                body.Add(new JProperty("errorScope", (String) context.LastError.Scope));
+                body.Add(new JProperty("errorPath", (String) context.LastError.Path));
+                body.Add(new JProperty("errorPolicyId", (String) context.LastError.PolicyId));
+                return body.ToString();
+            }</set-body>
         </return-response>
         <!-- End : Set error respose - TemplateRest -->
         <!--++++++++++++++++++++++++++++++++++++++++-->

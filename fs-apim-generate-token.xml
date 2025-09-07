@@ -22,10 +22,10 @@
                 return null;
             }
         }" />
-        <set-variable name="subscription" value="@(context.Request.Headers.GetValueOrDefault("Ocp-Apim-Subscription-Key",""))" />
-        <set-variable name="autherization-profile" value="@(context.Request.Headers.GetValueOrDefault("Apim-AutherizationProfile_ignore","Dummy"))" />
+        <set-variable name="subscription" value="@(context.Request.Headers.GetValueOrDefault("x-aia-apikey",""))" />
+        <set-variable name="autherization-profile" value="Dummy" />
         <set-variable name="appId-all" value="{{appId-all}}" />
-        <set-variable name="userId-appId-subscription-relation-set1" value="{{userId-appId-subscription-relation}}" />
+        <set-variable name="userId-appId-subscription-relation-set1" value="{{userId-appId-subscription-relation-set1}}" />
         <set-variable name="userId-appId-subscription-relation-set2" value="{{userId-appId-subscription-relation-set2}}" />
         <set-variable name="userId-appId-subscription-relation-set3" value="{{userId-appId-subscription-relation-set3}}" />
         <set-variable name="userId-appId-subscription-relation-set4" value="{{userId-appId-subscription-relation-set4}}" />
@@ -33,8 +33,8 @@
         <set-variable name="validateResult" value="@{
            
             JObject result = new JObject(
-                new JProperty("errorMsg", null)
-                , new JProperty("accessTokenLifeTime", -1)
+                new JProperty("errorMsg", null), 
+                new JProperty("accessTokenLifeTime", -1)
             );
            
             //validate input
@@ -44,7 +44,7 @@
             try {
                 JObject reqBody = (JObject) context.Variables["requestBody"];
                 if(reqBody==null){
-                    return "Invalid userId, appId or subscription";
+                    return "Invalid userId, appId or subscription. Its True";
                 }
                 userId = (String) reqBody.GetValue("userId");
                 appIdList = (JArray) reqBody.GetValue("appId");
@@ -173,10 +173,10 @@
                     </set-header>
                     <set-body>@{
                         JObject resBody = new JObject(
-                            new JProperty("returnCode", "E")
-                            , new JProperty("returnMessage", ((JObject)context.Variables["validateResult"])["errorMsg"] )
-                            , new JProperty("statusCode", "401")
-                            , new JProperty("errorCode", "T-001")
+                            new JProperty("reasonCode", "ERR_GW_401"),
+                            new JProperty("reason", "Unauthorized"),
+                            new JProperty("message", ((JObject)context.Variables["validateResult"])["errorMsg"] ),
+                            new JProperty("sourceSystem", "Gateway")
                         );
                         return resBody.ToString();
                     }</set-body>
@@ -262,7 +262,7 @@
  
                     Random rand = new Random();
                     String token = "";
-                    for(int i=0; i<50; i++){
+                    for(int i=0; i < 32; i++){
                         int num = rand.Next(0, chars.Length);
                         token = token+chars[num].ToString();
                     }
@@ -273,10 +273,10 @@
                     int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
                    
                     JObject accessTokenInfo = new JObject(
-                        new JProperty("accessToken", accessToken)
-                        , new JProperty("tokenType","Bearer")
-                        , new JProperty("expireIn", accessTokenLifeTime)
-                        , new JProperty("tokenIssueTime", DateTime.Now)
+                        new JProperty("access_token", accessToken), 
+                        new JProperty("token_type","Bearer"), 
+                        new JProperty("expires_in", accessTokenLifeTime)
+                        // new JProperty("tokenIssueTime", DateTime.Now)
                     );
  
                     return accessTokenInfo;
@@ -284,7 +284,7 @@
                 <set-variable name="accessTokenCacheKey" value="@{
                     JObject reqBody = (JObject) context.Variables["requestBody"];
                     String subscription = (String) context.Variables["subscription"];
-                    String accessToken = (String) context.Variables["accessToken"];
+                    String accessToken = "Bearer " + (String) context.Variables["accessToken"];
                     String cacheKey = "api[TokenManager]__subscription["+subscription+"]__accessToken["+accessToken+"]";
                     return cacheKey;
                 }" />
@@ -428,12 +428,13 @@
             </set-header>
             <set-body>@{
                 JObject accessTokenInfo = (JObject) context.Variables["accessTokenInfo"];
-                JObject resBody = new JObject(
-                    new JProperty("returnCode","S")
-                    , new JProperty("returnMessage","success")
-                    , new JProperty("statusCode", "200")
-                    , new JProperty("accessTokenInfo",accessTokenInfo)
-                );
+                // JObject resBody = new JObject(
+                //     new JProperty("returnCode","S"), 
+                //     new JProperty("returnMessage","success"), 
+                //     new JProperty("statusCode", "200"), 
+                //     new JProperty("accessTokenInfo", accessTokenInfo)
+                // );
+                JObject resBody = accessTokenInfo;
                 return resBody.ToString();
             }</set-body>
         </return-response>
@@ -467,17 +468,17 @@
                 <value>application/json</value>
             </set-header>
             <set-body>@{
-                        JObject body = new JObject();
-                        body.Add(new JProperty("status", "E"));
-                        body.Add(new JProperty("message", (String) context.LastError.Message));
-                        body.Add(new JProperty("errorSource", (String) context.LastError.Source));
-                        body.Add(new JProperty("errorReason", (String) context.LastError.Reason));
-                        body.Add(new JProperty("errorMessage", (String) context.LastError.Message));
-                        body.Add(new JProperty("errorScope", (String) context.LastError.Scope));
-                        body.Add(new JProperty("errorPath", (String) context.LastError.Path));
-                        body.Add(new JProperty("errorPolicyId", (String) context.LastError.PolicyId));
-                        return body.ToString();
-                    }</set-body>
+              JObject body = new JObject();
+              body.Add(new JProperty("status", "E"));
+              body.Add(new JProperty("message", (String) context.LastError.Message));
+              body.Add(new JProperty("errorSource", (String) context.LastError.Source));
+              body.Add(new JProperty("errorReason", (String) context.LastError.Reason));
+              body.Add(new JProperty("errorMessage", (String) context.LastError.Message));
+              body.Add(new JProperty("errorScope", (String) context.LastError.Scope));
+              body.Add(new JProperty("errorPath", (String) context.LastError.Path));
+              body.Add(new JProperty("errorPolicyId", (String) context.LastError.PolicyId));
+              return body.ToString();
+            }</set-body>
         </return-response>
         <!-- End : Set error respose - TemplateRest -->
         <!--++++++++++++++++++++++++++++++++++++++++-->
