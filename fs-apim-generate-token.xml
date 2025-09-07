@@ -16,7 +16,7 @@
         <!-- Start : Check userId, appId and subscription -->
         <set-variable name="requestBody" value="@{
             try {
-                JObject reqBody = (JObject)context.Request.Body.As<JObject>();
+                JObject reqBody = (JObject) context.Request.Body.As<JObject>();
                 return reqBody;
             } catch(Exception err) {
                 return null;
@@ -49,10 +49,11 @@
                 userId = (String) reqBody.GetValue("userId");
                 appIdList = (JArray) reqBody.GetValue("appId");
                 subscription = (String) context.Variables["subscription"];
-                if(userId==null
-                        || appIdList==null || appIdList.Count==0
-                        || subscription==null || subscription==""
-                    ){
+                if(
+                    userId==null
+                    || appIdList==null || appIdList.Count==0
+                    || subscription==null || subscription==""
+                ){
                    
                     result["errorMsg"] = "Invalid userId, appId or subscription";
                     return result;
@@ -188,7 +189,6 @@
         <!--+++++++++++++++++++++++++++++++-->
         <!-- Start : Check singleton token -->
         <set-variable name="singletonCacheKey" value="@{
- 
             String subscription = (String)context.Variables["subscription"];
             String autherizationProfile = (String)context.Variables["autherization-profile"];
             JObject reqBody = (JObject) context.Variables["requestBody"];
@@ -282,48 +282,51 @@
                     return accessTokenInfo;
                 }" />
                 <set-variable name="accessTokenCacheKey" value="@{
-                    JObject reqBody = (JObject) context.Variables["requestBody"];
                     String subscription = (String) context.Variables["subscription"];
                     String accessToken = "Bearer " + (String) context.Variables["accessToken"];
                     String cacheKey = "api[TokenManager]__subscription["+subscription+"]__accessToken["+accessToken+"]";
                     return cacheKey;
                 }" />
-                <cache-store-value key="@{
-                                            return (String) context.Variables["accessTokenCacheKey"];
-                                        }" value="@{
-                                            JObject reqBody = (JObject) context.Variables["requestBody"];
-                                            JArray appId = (JArray) reqBody.GetValue("appId");
-                                            return appId;
-                                        }" duration="@{
-                                            int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
-                                            return (int) accessTokenLifeTime+10;
-                                        }" caching-type="internal" />
-                <cache-store-value key="@{
-                                            return (String) context.Variables["accessTokenCacheKey"]+"_____accessTokenInfo";
-                                        }" value="@{
-                                            JObject accessTokenInfo = (JObject) context.Variables["accessTokenInfo"];
-                                            return accessTokenInfo;
-                                        }" duration="@{
-                                            int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
-                                            return (int) accessTokenLifeTime+10;
-                                        }" caching-type="internal" />
-                <cache-store-value key="@{
-                                            return (String) context.Variables["accessTokenCacheKey"]+"_____autherizationProfile";
-                                        }" value="@{
-                                            return (String) context.Variables["autherization-profile"];
-                                        }" duration="@{
-                                            int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
-                                            return (int) accessTokenLifeTime+10;
-                                        }" caching-type="internal" />
-                <cache-store-value key="@{
-                                            return (String) context.Variables["singletonCacheKey"];
-                                        }" value="@{
-                                            JObject accessTokenInfo = (JObject) context.Variables["accessTokenInfo"];
-                                            return accessTokenInfo;
-                                        }" duration="@{
-                                            int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
-                                            return (int) accessTokenLifeTime;
-                                        }" caching-type="internal" />
+                <cache-store-value 
+                    key="@{
+                        return (String) context.Variables["accessTokenCacheKey"];
+                    }" value="@{
+                        JObject reqBody = (JObject) context.Variables["requestBody"];
+                        JArray appId = (JArray) reqBody.GetValue("appId");
+                        return appId;
+                    }" duration="@{
+                        int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
+                        return (int) accessTokenLifeTime+10;
+                    }" caching-type="internal" />
+                <cache-store-value 
+                    key="@{
+                        return (String) context.Variables["accessTokenCacheKey"]+"_____accessTokenInfo";
+                    }" value="@{
+                        JObject accessTokenInfo = (JObject) context.Variables["accessTokenInfo"];
+                        return accessTokenInfo;
+                    }" duration="@{
+                        int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
+                        return (int) accessTokenLifeTime+10;
+                    }" caching-type="internal" />
+                <cache-store-value 
+                    key="@{
+                        return (String) context.Variables["accessTokenCacheKey"]+"_____autherizationProfile";
+                    }" value="@{
+                        return (String) context.Variables["autherization-profile"];
+                    }" duration="@{
+                        int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
+                        return (int) accessTokenLifeTime+10;
+                    }" caching-type="internal" />
+                <cache-store-value 
+                    key="@{
+                        return (String) context.Variables["singletonCacheKey"];
+                    }" value="@{
+                        JObject accessTokenInfo = (JObject) context.Variables["accessTokenInfo"];
+                        return accessTokenInfo;
+                    }" duration="@{
+                        int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
+                        return (int) accessTokenLifeTime;
+                    }" caching-type="internal" />
                 <!--+++++++++++++++++++++-->
                 <!-- Start : check token -->
                 <cache-lookup-value key="@{
