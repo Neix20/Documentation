@@ -14,14 +14,6 @@
     <inbound>
         <!--++++++++++++++++++++++++++++++++++++++++++++++-->
         <!-- Start : Check userId, appId and subscription -->
-        <set-variable name="requestBody" value="@{
-            try {
-                JObject reqBody = (JObject) context.Request.Body.As<JObject>();
-                return reqBody;
-            } catch(Exception err) {
-                return null;
-            }
-        }" />
         <set-variable name="subscription" value="@(context.Request.Headers.GetValueOrDefault("x-aia-apikey",""))" />
         <set-variable name="autherization-profile" value="Dummy" />
         <set-variable name="appId-all" value="{{appId-all}}" />
@@ -31,40 +23,25 @@
         <set-variable name="userId-appId-subscription-relation-set4" value="{{userId-appId-subscription-relation-set4}}" />
         <set-variable name="userId-appId-subscription-relation-set5" value="{{userId-appId-subscription-relation-set5}}" />
         <set-variable name="validateResult" value="@{
-           
             JObject result = new JObject(
                 new JProperty("errorMsg", null), 
                 new JProperty("accessTokenLifeTime", -1)
             );
-           
+            
             //validate input
-            String userId = null;
             JArray appIdList = null;
-            String subscription = null;
-            try {
-                JObject reqBody = (JObject) context.Variables["requestBody"];
-                if(reqBody==null){
-                    return "Invalid userId, appId or subscription. Its True";
-                }
-                userId = (String) reqBody.GetValue("userId");
-                appIdList = (JArray) reqBody.GetValue("appId");
-                subscription = (String) context.Variables["subscription"];
-                if(
-                    userId==null
-                    || appIdList==null || appIdList.Count==0
-                    || subscription==null || subscription==""
-                ){
-                   
-                    result["errorMsg"] = "Invalid userId, appId or subscription";
-                    return result;
-                }
-            } catch(Exception err) {
-                result["errorMsg"] = "Error - "+err;
-                return result;
+            String subscription = (String) context.Variables["subscription"];
+
+            // Custom Header
+            String basicToken = null;
+
+            String auth = context.Request.Headers.GetValueOrDefault("Authorization", "");
+            if (auth.StartsWith("Basic ")) {
+                basicToken = auth.Substring("Basic ".Length);
             }
- 
+
             //load permission setup
-            for(int iLoop=0; iLoop<3; iLoop = iLoop+1){
+            for(int iLoop=0; iLoop < 5; iLoop = iLoop+1){
                 JObject permissionJson = null;
                 try {
                     String permissionStr = (String) context.Variables["userId-appId-subscription-relation-set"+(iLoop+1)];
@@ -73,21 +50,24 @@
                     result["errorMsg"] = "Error - Please check name value 'userId-appId-subscription-relation'";
                     return result;
                 }
- 
+
                 //check permission
                 try {
-                    JObject permissionUserId = (JObject) permissionJson.GetValue("userId-"+userId);
+                    JObject permissionUserId = (JObject) permissionJson.GetValue("userId-" + basicToken);
                     if(permissionUserId==null){
                         result["errorMsg"] = "Invalid userId, appId or subscription";
                         continue;
                     }
-                   
+
+                    appIdList = (JArray) permissionUserId.GetValue("appId");
+                    result["requestBody"] = permissionUserId;
+                    
                     int accessTokenLifeTime = -1;
                     try {
                         accessTokenLifeTime = (int) permissionUserId.GetValue("accessTokenLifeTime");
                     } catch(Exception err){
                     }
-                   
+                    
                     JArray permissionSubscription = (JArray) permissionUserId.GetValue("subscription");
                     JArray permissionAppId = (JArray) permissionUserId.GetValue("appId");
                     if(
@@ -97,7 +77,7 @@
                         result["errorMsg"] = "Invalid userId, appId or subscription";
                         return result;
                     }
-                   
+                    
                     //special role --> all permission
                     if(permissionAppId.Count==1){
                         if( ((String)permissionAppId[0]).Equals("All") ){
@@ -110,7 +90,7 @@
                             }
                         }
                     }
-                                       
+                                        
                     //validate subscription
                     {
                         Boolean isFound = false;
@@ -125,7 +105,7 @@
                             return result;
                         }
                     }
-                   
+                    
                     //validate appIdList
                     {
                         for(int i=0; i<appIdList.Count; i++){
@@ -144,7 +124,7 @@
                     }
                     result["errorMsg"] = null;
                     result["accessTokenLifeTime"] = accessTokenLifeTime;
-                   
+                    
                     //tokenStratergy
                     String tokenStratergy = (String) permissionUserId.GetValue("tokenStratergy");
                     result["tokenStratergy"] = tokenStratergy;
@@ -155,6 +135,15 @@
                 }
             }
             return result;
+        }" />
+        <set-variable name="requestBody" value="@{
+            try {
+                JObject parent = (JObject) context.Variables["validateResult"];
+                JObject reqBody = (JObject) parent["requestBody"];
+                return reqBody;
+            } catch(Exception err) {
+                return null;
+            }
         }" />
         <choose>
             <when condition="@( ((String)((JObject)context.Variables["validateResult"])["errorMsg"])==null?false:true)">
@@ -287,8 +276,7 @@
                     String cacheKey = "api[TokenManager]__subscription["+subscription+"]__accessToken["+accessToken+"]";
                     return cacheKey;
                 }" />
-                <cache-store-value 
-                    key="@{
+                <cache-store-value key="@{
                         return (String) context.Variables["accessTokenCacheKey"];
                     }" value="@{
                         JObject reqBody = (JObject) context.Variables["requestBody"];
@@ -298,8 +286,7 @@
                         int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
                         return (int) accessTokenLifeTime+10;
                     }" caching-type="internal" />
-                <cache-store-value 
-                    key="@{
+                <cache-store-value key="@{
                         return (String) context.Variables["accessTokenCacheKey"]+"_____accessTokenInfo";
                     }" value="@{
                         JObject accessTokenInfo = (JObject) context.Variables["accessTokenInfo"];
@@ -308,8 +295,7 @@
                         int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
                         return (int) accessTokenLifeTime+10;
                     }" caching-type="internal" />
-                <cache-store-value 
-                    key="@{
+                <cache-store-value key="@{
                         return (String) context.Variables["accessTokenCacheKey"]+"_____autherizationProfile";
                     }" value="@{
                         return (String) context.Variables["autherization-profile"];
@@ -317,8 +303,7 @@
                         int accessTokenLifeTime = (int) context.Variables["accessTokenLifeTime"];
                         return (int) accessTokenLifeTime+10;
                     }" caching-type="internal" />
-                <cache-store-value 
-                    key="@{
+                <cache-store-value key="@{
                         return (String) context.Variables["singletonCacheKey"];
                     }" value="@{
                         JObject accessTokenInfo = (JObject) context.Variables["accessTokenInfo"];

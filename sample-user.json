@@ -1,0 +1,14 @@
+{
+    "userId-YWNmZGRlYzQtZGUwMS01ZDYzLThiYWUtNGY2MzE0ZWQxYjY2OjI2NmYxN2QyLTczNDAtNTY1ZS1iNGM2LTNlOWYyNmE5MTMxOQ==": {
+        "username": "acfddec4-de01-5d63-8bae-4f6314ed1b66",
+        "password": "266f17d2-7340-565e-b4c6-3e9f26a91319",
+        "accessTokenLifeTime": 3600,
+        "subscription": [
+            "77133203e2a34471adb3a142fb88c768"
+        ],
+        "appId": [
+            "eaa65c53-68e3-4c6b-a99f-18c67124901c"
+        ],
+        "tokenStrategy": "singleton"
+    }
+}
